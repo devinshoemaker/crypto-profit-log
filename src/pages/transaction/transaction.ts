@@ -50,7 +50,7 @@ export class TransactionPage {
       sellersFee = sellersFlatFee;
     }
 
-    this.suggestedSellPrice = (Number(this.purchasePrice) + purchaseFee + sellersFee) * 1.02;
+    this.suggestedSellPrice = (Number(this.purchasePrice) + purchaseFee + sellersFee) * 1.01;
   }
 
 
