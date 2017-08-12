@@ -55,5 +55,4 @@ export class TransactionPage {
     this.profit = (this.suggestedSellPrice * this.quantity) - totalCost;
   }
 
-
 }
