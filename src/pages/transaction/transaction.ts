@@ -32,10 +32,6 @@ export class TransactionPage {
       this.quantity = this.purchaseDollars / this.purchasePrice;
     }
 
-    if (this.purchasePrice && this.quantity) {
-      this.purchaseDollars = this.purchasePrice * this.quantity;
-    }
-
     let percentageFee = this.purchaseDollars * 0.0149;
 
     let purchaseFlatFee = 1.99;
