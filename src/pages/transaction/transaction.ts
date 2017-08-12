@@ -18,6 +18,7 @@ export class TransactionPage {
   purchasePrice: number;
   suggestedSellPrice: number;
   purchaseDollars: number;
+  profit: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
@@ -51,6 +52,7 @@ export class TransactionPage {
     }
 
     this.suggestedSellPrice = (Number(this.purchasePrice) + purchaseFee + sellersFee) * 1.01;
+    this.profit = (this.suggestedSellPrice * this.quantity) - this.purchaseDollars;
   }
 
 
