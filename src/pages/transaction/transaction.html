@@ -18,6 +18,10 @@
     <ion-input type="number" name="purchasePrice" [(ngModel)]="purchasePrice"></ion-input>
   </ion-item>
 
+  <button ion-button block (click)="calculateSuggestedSalePrice()">
+    Calculate
+  </button>
+
   <ion-item>
     <ion-label floating>Crypto</ion-label>
     <ion-input type="number" readonly name="quantity" [(ngModel)]="quantity"></ion-input>
@@ -28,7 +32,4 @@
     <ion-input type="number" readonly name="suggestedSellPrice" [(ngModel)]="suggestedSellPrice"></ion-input>
   </ion-item>
 
-  <button ion-button block (click)="calculateSuggestedSalePrice()">
-    Calculate
-  </button>
 </ion-content>
