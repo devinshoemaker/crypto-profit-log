@@ -51,8 +51,9 @@ export class TransactionPage {
       sellersFee = sellersFlatFee;
     }
 
-    this.suggestedSellPrice = (Number(this.purchasePrice) + purchaseFee + sellersFee) * 1.01;
-    this.profit = (this.suggestedSellPrice * this.quantity) - this.purchaseDollars;
+    let totalCost = (Number(this.purchasePrice) + purchaseFee + sellersFee);
+    this.suggestedSellPrice = totalCost * 1.01;
+    this.profit = (this.suggestedSellPrice * this.quantity) - totalCost;
   }
 
 
