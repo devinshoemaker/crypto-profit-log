@@ -1,0 +1,39 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Transaction</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-item>
+    <ion-label floating>USD</ion-label>
+    <ion-input type="number" name="purchaseDollars" [(ngModel)]="purchaseDollars"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Price</ion-label>
+    <ion-input type="number" name="purchasePrice" [(ngModel)]="purchasePrice"></ion-input>
+  </ion-item>
+
+  <button ion-button block (click)="calculateSuggestedSalePrice()">
+    Calculate
+  </button>
+
+  <ion-item>
+    <ion-label floating>Crypto</ion-label>
+    <ion-input type="number" readonly name="quantity" [(ngModel)]="quantity"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Suggested Sell Price</ion-label>
+    <ion-input type="number" readonly name="suggestedSellPrice" [(ngModel)]="suggestedSellPrice"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Profit</ion-label>
+    <ion-input type="number" readonly name="profit" [(ngModel)]="profit"></ion-input>
+  </ion-item>
+</ion-content>
