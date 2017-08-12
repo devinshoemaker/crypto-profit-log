@@ -38,7 +38,7 @@ export class TransactionPage {
 
     let percentageFee = this.purchaseDollars * 0.0149;
 
-    let purchaseFlatFee = 2.99;
+    let purchaseFlatFee = 1.99;
     let purchaseFee = 0.0;
     if (percentageFee > percentageFee) {
       purchaseFee = percentageFee;
@@ -46,7 +46,7 @@ export class TransactionPage {
       purchaseFee = purchaseFlatFee;
     }
 
-    let sellersFlatFee = 1.49;
+    let sellersFlatFee = 1.99;
     let sellersFee = 0.0;
     if (percentageFee > sellersFlatFee) {
       sellersFee = percentageFee;
