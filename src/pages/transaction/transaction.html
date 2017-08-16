@@ -10,12 +10,12 @@
 <ion-content padding>
   <ion-item>
     <ion-label floating>USD</ion-label>
-    <ion-input type="number" name="purchaseDollars" [(ngModel)]="purchaseDollars"></ion-input>
+    <ion-input type="number" name="purchaseDollars" [(ngModel)]="purchaseAmountDollars"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label floating>Price</ion-label>
-    <ion-input type="number" name="purchasePrice" [(ngModel)]="purchasePrice"></ion-input>
+    <ion-input type="number" name="purchasePrice" [(ngModel)]="currentCryptoPrice"></ion-input>
   </ion-item>
 
   <button ion-button block (click)="calculateSuggestedSalePrice()">
@@ -24,7 +24,12 @@
 
   <ion-item>
     <ion-label floating>Crypto</ion-label>
-    <ion-input type="number" readonly name="quantity" [(ngModel)]="quantity"></ion-input>
+    <ion-input type="number" readonly name="quantity" [(ngModel)]="cryptoQuantity"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Break Even Price</ion-label>
+    <ion-input type="number" readonly name="breakEvenPrice" [(ngModel)]="breakEvenPrice"></ion-input>
   </ion-item>
 
   <ion-item>

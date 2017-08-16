@@ -14,11 +14,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class TransactionPage {
 
-  quantity: number;
-  purchasePrice: number;
+  cryptoQuantity: number;
+  currentCryptoPrice: number;
   suggestedSellPrice: number;
-  purchaseDollars: number;
+  purchaseAmountDollars: number;
   profit: number;
+  breakEvenPrice: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
@@ -28,31 +29,26 @@ export class TransactionPage {
 
 
   calculateSuggestedSalePrice() {
-    if (this.purchaseDollars && this.purchasePrice) {
-      this.quantity = this.purchaseDollars / this.purchasePrice;
+    if (this.purchaseAmountDollars && this.currentCryptoPrice) {
+      this.cryptoQuantity = this.purchaseAmountDollars / this.currentCryptoPrice;
     }
 
-    let percentageFee = this.purchaseDollars * 0.0149;
+    let percentageFee = this.purchaseAmountDollars * 0.0149;
+    let flatFee = 1.99;
+    let transactionFee = 0.0;
 
-    let purchaseFlatFee = 1.99;
-    let purchaseFee = 0.0;
-    if (percentageFee > percentageFee) {
-      purchaseFee = percentageFee;
+    if (percentageFee > flatFee) {
+      transactionFee = percentageFee;
     } else {
-      purchaseFee = purchaseFlatFee;
+      transactionFee = flatFee;
     }
 
-    let sellersFlatFee = 1.99;
-    let sellersFee = 0.0;
-    if (percentageFee > sellersFlatFee) {
-      sellersFee = percentageFee;
-    } else {
-      sellersFee = sellersFlatFee;
-    }
+    this.breakEvenPrice = (Number(this.purchaseAmountDollars) + (transactionFee * 2)) / this.cryptoQuantity;
+    this.suggestedSellPrice = this.breakEvenPrice * 1.01;
 
-    let totalCost = (Number(this.purchasePrice) + purchaseFee + sellersFee);
-    this.suggestedSellPrice = totalCost * 1.01;
-    this.profit = (this.suggestedSellPrice * this.quantity) - totalCost;
+    let purchaseCostAfterFees = Number(this.purchaseAmountDollars) + (transactionFee * 2);
+    let suggestedSellTotal = this.suggestedSellPrice * this.cryptoQuantity;
+    this.profit = suggestedSellTotal - purchaseCostAfterFees;
   }
 
 }
