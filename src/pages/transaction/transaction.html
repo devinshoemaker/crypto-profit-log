@@ -8,7 +8,7 @@
 
 
 <ion-content padding>
-  <form [formGroup]="transactionForm">
+  <form [formGroup]="transactionForm" (ngSubmit)="saveTransaction(transactionForm.value)">
     <ion-item>
       <ion-label floating>USD</ion-label>
       <ion-input type="number" formControlName="purchaseAmountDollars" [(ngModel)]="transaction.purchaseAmountDollars"></ion-input>
