@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import PouchDB from 'pouchdb';
 
@@ -15,7 +14,7 @@ export class TransactionProvider {
   db: any;
   remote: any;
 
-  constructor(public http: Http) {
+  constructor() {
     this.db = new PouchDB('coinbase-profit');
 
     this.remote = 'http://admin:password@127.0.0.1:5984/coinbase-profit';
