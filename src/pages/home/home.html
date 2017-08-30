@@ -7,10 +7,18 @@
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <ion-list>
+    <div *ngFor="let transaction of transactions">
+      <ion-card>
+        <ion-card-header>
+          Crypto: {{transaction.cryptoQuantity}}
+        </ion-card-header>
+        <ion-card-content>
+          USD: {{transaction.purchaseAmountDollars}}
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ion-list>
 
   <ion-fab right bottom>
     <button ion-fab (click)="newTransaction()"><ion-icon name="add"></ion-icon></button>

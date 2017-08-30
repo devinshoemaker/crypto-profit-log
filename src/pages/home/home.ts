@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { TransactionPage } from "../transaction/transaction";
+import { TransactionProvider } from '../../providers/transaction/transaction';
 
 @Component({
   selector: 'page-home',
@@ -8,8 +9,20 @@ import { TransactionPage } from "../transaction/transaction";
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+  transactions: any;
 
+  constructor(public navCtrl: NavController, public transactionService: TransactionProvider) {
+
+  }
+
+  ionViewDidLoad() {
+    this.getTransactions();
+  }
+
+  getTransactions() {
+    this.transactionService.getAllTransactions().then((data) => {
+      this.transactions = data;
+    });
   }
 
   newTransaction() {
