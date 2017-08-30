@@ -29,4 +29,8 @@ export class HomePage {
     this.navCtrl.push(TransactionPage);
   }
 
+  viewTransaction(transaction) {
+    this.navCtrl.push(TransactionPage, { transaction: transaction, isUpdate: true });
+  }
+
 }

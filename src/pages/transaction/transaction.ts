@@ -35,6 +35,10 @@ export class TransactionPage {
       breakEvenPrice: [''],
       suggestedSellPrice: ['']
     });
+
+    if (this.navParams.get('transaction')) {
+      this.transaction = this.navParams.get('transaction');
+    }
   }
 
   ionViewDidLoad() {

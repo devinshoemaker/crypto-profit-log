@@ -9,7 +9,7 @@
 <ion-content padding>
   <ion-list>
     <div *ngFor="let transaction of transactions">
-      <ion-card>
+      <ion-card (click)="viewTransaction(transaction)">
         <ion-card-header>
           Crypto: {{transaction.cryptoQuantity}}
         </ion-card-header>
