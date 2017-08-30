@@ -42,8 +42,8 @@ export class TransactionPage {
 
 
   calculateSuggestedSalePrice() {
-    if (this.transaction.purchaseAmountDollars && this.transaction.currentCryptoPrice) {
-      this.transaction.cryptoQuantity = this.transaction.purchaseAmountDollars / this.transaction.currentCryptoPrice;
+    if (this.transaction.cryptoQuantity && this.transaction.currentCryptoPrice) {
+      this.transaction.purchaseAmountDollars = this.transaction.cryptoQuantity * this.transaction.currentCryptoPrice;
     }
 
     let percentageFee = this.transaction.purchaseAmountDollars * 0.0149;

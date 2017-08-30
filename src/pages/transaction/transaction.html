@@ -10,8 +10,8 @@
 <ion-content padding>
   <form [formGroup]="transactionForm" (ngSubmit)="saveTransaction(transactionForm.value)">
     <ion-item>
-      <ion-label floating>USD</ion-label>
-      <ion-input type="number" formControlName="purchaseAmountDollars" [(ngModel)]="transaction.purchaseAmountDollars"></ion-input>
+      <ion-label floating>Quantity</ion-label>
+      <ion-input type="number" formControlName="cryptoQuantity" [(ngModel)]="transaction.cryptoQuantity"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -24,8 +24,8 @@
     </button>
 
     <ion-item>
-      <ion-label floating>Crypto</ion-label>
-      <ion-input type="number" readonly formControlName="cryptoQuantity" [(ngModel)]="transaction.cryptoQuantity"></ion-input>
+      <ion-label floating>USD</ion-label>
+      <ion-input type="number" readonly formControlName="purchaseAmountDollars" [(ngModel)]="transaction.purchaseAmountDollars"></ion-input>
     </ion-item>
 
     <ion-item>
