@@ -69,7 +69,11 @@ export class TransactionPage {
   }
 
   saveTransaction(transaction) {
-    this.transactionService.createTransaction(transaction);
+    if (this.navParams.get('isUpdate')) {
+      this.transactionService.updateTransaction(transaction);
+    } else {
+      this.transactionService.createTransaction(transaction);
+    }
 
     this.navCtrl.pop();
   }
