@@ -19,12 +19,13 @@ export class TransactionPage {
   transactionForm: FormGroup;
   profit: number;
 
-  transaction: { purchaseAmountDollars: number, currentCryptoPrice: number, cryptoQuantity: number, breakEvenPrice: number, suggestedSellPrice: number } = {
+  transaction: { purchaseAmountDollars: number, currentCryptoPrice: number, cryptoQuantity: number, breakEvenPrice: number, suggestedSellPrice: number, active: boolean } = {
     purchaseAmountDollars: null,
     currentCryptoPrice: null,
     cryptoQuantity: null,
     breakEvenPrice: null,
-    suggestedSellPrice: null
+    suggestedSellPrice: null,
+    active: true
   };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public transactionService: TransactionProvider) {
