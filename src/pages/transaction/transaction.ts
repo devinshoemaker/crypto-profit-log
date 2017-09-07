@@ -69,6 +69,8 @@ export class TransactionPage {
   }
 
   saveTransaction(transaction) {
+    this.calculateSuggestedSalePrice();
+
     if (this.navParams.get('isUpdate')) {
       this.transactionService.updateTransaction(transaction);
     } else {
