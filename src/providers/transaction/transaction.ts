@@ -17,7 +17,7 @@ export class TransactionProvider {
   constructor() {
     this.db = new PouchDB('coinbase-profit');
 
-    this.remote = 'http://admin:password@127.0.0.1:5984/coinbase-profit';
+    this.remote = 'http://127.0.0.1:5984/coinbase-profit';
 
     let options = {
       live: true,
