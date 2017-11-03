@@ -9,7 +9,7 @@ import { TransactionProvider } from '../../providers/transaction/transaction';
 })
 export class HomePage {
 
-  transactions: any;
+  transactions: Transaction[];
 
   constructor(public navCtrl: NavController, public transactionService: TransactionProvider) {
 

@@ -19,7 +19,7 @@ export class TransactionPage {
   transactionForm: FormGroup;
   profit: number;
 
-  transaction: { purchaseAmountDollars: number, currentCryptoPrice: number, cryptoQuantity: number, breakEvenPrice: number, suggestedSellPrice: number, active: boolean } = {
+  transaction: Transaction = {
     purchaseAmountDollars: null,
     currentCryptoPrice: null,
     cryptoQuantity: null,
