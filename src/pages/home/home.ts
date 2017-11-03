@@ -33,4 +33,9 @@ export class HomePage {
     this.navCtrl.push(TransactionPage, { transaction: transaction, isUpdate: true });
   }
 
+  archiveTransaction(transaction) {
+    transaction.active = false;
+    this.transactionService.updateTransaction(transaction);
+  }
+
 }

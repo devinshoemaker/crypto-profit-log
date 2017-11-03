@@ -7,20 +7,38 @@
 </ion-header>
 
 <ion-content padding>
+
   <ion-list>
     <div *ngFor="let transaction of transactions">
-      <ion-card (click)="viewTransaction(transaction)">
-        <ion-card-header>
-          Crypto: {{transaction.cryptoQuantity}}
-        </ion-card-header>
-        <ion-card-content>
-          USD: {{transaction.purchaseAmountDollars}}
-        </ion-card-content>
+
+      <ion-card>
+
+        <div (click)="viewTransaction(transaction)">
+          <ion-card-header>
+            Crypto: {{transaction.cryptoQuantity}}
+          </ion-card-header>
+
+          <ion-card-content>
+            Price: ${{transaction.purchaseAmountDollars}}<br>
+            Break even: ${{transaction.breakEvenPrice}}<br>
+            Complete: {{transaction.active}}
+          </ion-card-content>
+        </div>
+
+        <ion-item>
+          <button ion-button icon-left clear item-end (click)="archiveTransaction(transaction)">
+            <ion-icon name="archive"></ion-icon>
+            Complete
+          </button>
+        </ion-item>
+
       </ion-card>
+
     </div>
   </ion-list>
 
   <ion-fab right bottom>
     <button ion-fab (click)="newTransaction()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
+
 </ion-content>
