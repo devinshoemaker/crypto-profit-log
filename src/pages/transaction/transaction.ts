@@ -30,9 +30,9 @@ export class TransactionPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public transactionService: TransactionProvider) {
     this.transactionForm = formBuilder.group({
-      purchaseAmountDollars: ['', Validators.required],
+      purchaseAmountDollars: [''],
       currentCryptoPrice: ['', Validators.required],
-      cryptoQuantity: [''],
+      cryptoQuantity: ['', Validators.required],
       breakEvenPrice: [''],
       suggestedSellPrice: ['']
     });
@@ -47,38 +47,42 @@ export class TransactionPage {
 
 
   calculateSuggestedSalePrice() {
-    if (this.transaction.cryptoQuantity && this.transaction.currentCryptoPrice) {
-      this.transaction.purchaseAmountDollars = this.transaction.cryptoQuantity * this.transaction.currentCryptoPrice;
+    if (this.transactionForm.valid) {
+      if (this.transaction.cryptoQuantity && this.transaction.currentCryptoPrice) {
+        this.transaction.purchaseAmountDollars = this.transaction.cryptoQuantity * this.transaction.currentCryptoPrice;
+      }
+
+      let percentageFee = this.transaction.purchaseAmountDollars * 0.0149;
+      let flatFee = 2.99;
+      let transactionFee = 0.0;
+
+      if (percentageFee > flatFee) {
+        transactionFee = percentageFee;
+      } else {
+        transactionFee = flatFee;
+      }
+
+      this.transaction.breakEvenPrice = (Number(this.transaction.purchaseAmountDollars) + (transactionFee * 2)) / this.transaction.cryptoQuantity;
+      this.transaction.suggestedSellPrice = this.transaction.breakEvenPrice * 1.01;
+
+      let purchaseCostAfterFees = Number(this.transaction.purchaseAmountDollars) + (transactionFee * 2);
+      let suggestedSellTotal = this.transaction.suggestedSellPrice * this.transaction.cryptoQuantity;
+      this.profit = suggestedSellTotal - purchaseCostAfterFees;
     }
-
-    let percentageFee = this.transaction.purchaseAmountDollars * 0.0149;
-    let flatFee = 2.99;
-    let transactionFee = 0.0;
-
-    if (percentageFee > flatFee) {
-      transactionFee = percentageFee;
-    } else {
-      transactionFee = flatFee;
-    }
-
-    this.transaction.breakEvenPrice = (Number(this.transaction.purchaseAmountDollars) + (transactionFee * 2)) / this.transaction.cryptoQuantity;
-    this.transaction.suggestedSellPrice = this.transaction.breakEvenPrice * 1.01;
-
-    let purchaseCostAfterFees = Number(this.transaction.purchaseAmountDollars) + (transactionFee * 2);
-    let suggestedSellTotal = this.transaction.suggestedSellPrice * this.transaction.cryptoQuantity;
-    this.profit = suggestedSellTotal - purchaseCostAfterFees;
   }
 
   saveTransaction(transaction) {
-    this.calculateSuggestedSalePrice();
+    if (this.transactionForm.valid) {
+      this.calculateSuggestedSalePrice();
 
-    if (this.navParams.get('isUpdate')) {
-      this.transactionService.updateTransaction(transaction);
-    } else {
-      this.transactionService.createTransaction(transaction);
+      if (this.navParams.get('isUpdate')) {
+        this.transactionService.updateTransaction(transaction);
+      } else {
+        this.transactionService.createTransaction(transaction);
+      }
+
+      this.navCtrl.pop();
     }
-
-    this.navCtrl.pop();
   }
 
 }
