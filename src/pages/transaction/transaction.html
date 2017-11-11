@@ -1,0 +1,50 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Transaction</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="transactionForm" (ngSubmit)="saveTransaction(transactionForm.value)">
+    <ion-item>
+      <ion-label floating>Quantity</ion-label>
+      <ion-input type="number" formControlName="cryptoQuantity" [(ngModel)]="transaction.cryptoQuantity"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Price</ion-label>
+      <ion-input type="number" formControlName="currentCryptoPrice" [(ngModel)]="transaction.currentCryptoPrice"></ion-input>
+    </ion-item>
+
+    <button type="button" ion-button block (click)="calculateSuggestedSalePrice()">
+      Calculate
+    </button>
+
+    <ion-item>
+      <ion-label floating>USD</ion-label>
+      <ion-input type="number" readonly formControlName="purchaseAmountDollars" [(ngModel)]="transaction.purchaseAmountDollars"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Break Even Price</ion-label>
+      <ion-input type="number" readonly formControlName="breakEvenPrice" [(ngModel)]="transaction.breakEvenPrice"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Suggested Sell Price</ion-label>
+      <ion-input type="number" readonly formControlName="suggestedSellPrice" [(ngModel)]="transaction.suggestedSellPrice"></ion-input>
+    </ion-item>
+
+    <ion-fab right bottom>
+      <button ion-fab><ion-icon name="checkmark"></ion-icon></button>
+    </ion-fab>
+  </form>
+
+  <ion-item>
+    <ion-label floating>Profit</ion-label>
+    <ion-input type="number" readonly name="profit" [(ngModel)]="profit"></ion-input>
+  </ion-item>
+</ion-content>

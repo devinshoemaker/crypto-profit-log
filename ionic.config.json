@@ -1,5 +1,8 @@
 {
   "name": "coinbase-profit",
-  "app_id": "",
-  "type": "ionic-angular"
+  "app_id": "7430f705",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
 }
