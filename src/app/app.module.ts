@@ -6,14 +6,15 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { TransactionPage } from "../pages/transaction/transaction";
+import { AddEditTransactionPage } from '../pages/add-edit-transaction/add-edit-transaction';
+
 import { TransactionProvider } from '../providers/transaction/transaction';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    TransactionPage
+    AddEditTransactionPage
   ],
   imports: [
     BrowserModule,
@@ -23,7 +24,7 @@ import { TransactionProvider } from '../providers/transaction/transaction';
   entryComponents: [
     MyApp,
     HomePage,
-    TransactionPage
+    AddEditTransactionPage
   ],
   providers: [
     StatusBar,
