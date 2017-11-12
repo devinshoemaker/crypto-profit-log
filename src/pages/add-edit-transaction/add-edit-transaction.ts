@@ -16,6 +16,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AddEditTransactionPage {
 
   transactionForm: FormGroup;
+  potentialProfit: number;
+
+  transaction: Transaction = {
+    purchaseAmountDollars: null,
+    currentCryptoPrice: null,
+    cryptoQuantity: null,
+    breakEvenPrice: null,
+    suggestedSellPrice: null,
+    active: true
+  };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder) {
     this.transactionForm = formBuilder.group({
@@ -25,5 +35,33 @@ export class AddEditTransactionPage {
   }
 
   ionViewDidLoad() {}
+
+  /**
+   * Calculate the transaction cost and suggested sale prices.
+   */
+  calculateSuggestedSalePrice() {
+    if (this.transactionForm.valid) {
+      this.transaction.cryptoQuantity = this.transactionForm.controls.cryptoQuantity.value;
+      this.transaction.currentCryptoPrice = this.transactionForm.controls.currentCryptoPrice.value;
+      this.transaction.purchaseAmountDollars = this.transaction.cryptoQuantity * this.transaction.currentCryptoPrice;
+
+      let percentageFee = this.transaction.purchaseAmountDollars * 0.0149;
+      let flatFee = 2.99;
+      let transactionFee = 0.0;
+
+      if (percentageFee > flatFee) {
+        transactionFee = percentageFee;
+      } else {
+        transactionFee = flatFee;
+      }
+
+      this.transaction.breakEvenPrice = (Number(this.transaction.purchaseAmountDollars) + (transactionFee * 2)) / this.transaction.cryptoQuantity;
+      this.transaction.suggestedSellPrice = this.transaction.breakEvenPrice * 1.01;
+
+      let purchaseCostAfterFees = Number(this.transaction.purchaseAmountDollars) + (transactionFee * 2);
+      let suggestedSellTotal = this.transaction.suggestedSellPrice * this.transaction.cryptoQuantity;
+      this.potentialProfit = suggestedSellTotal - purchaseCostAfterFees;
+    }
+  }
 
 }

@@ -23,4 +23,23 @@
 
   </form>
 
+  <button type="button" ion-button block (click)="calculateSuggestedSalePrice()">
+    Calculate
+  </button>
+
+  <ion-item>
+    <ion-label floating>USD</ion-label>
+    <ion-input type="number" readonly [(ngModel)]="transaction.purchaseAmountDollars"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Break Even Price</ion-label>
+    <ion-input type="number" readonly [(ngModel)]="transaction.breakEvenPrice"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Suggested Sell Price</ion-label>
+    <ion-input type="number" readonly [(ngModel)]="transaction.suggestedSellPrice"></ion-input>
+  </ion-item>
+
 </ion-content>
