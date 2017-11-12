@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TransactionProvider } from '../../providers/transaction/transaction';
 
 /**
  * Create or edit a crypto currency transaction.
@@ -27,7 +28,7 @@ export class AddEditTransactionPage {
     active: true
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public transactionProvider: TransactionProvider) {
     this.transactionForm = formBuilder.group({
       currentCryptoPrice: ['', Validators.required],
       cryptoQuantity: ['', Validators.required]
@@ -61,6 +62,23 @@ export class AddEditTransactionPage {
       let purchaseCostAfterFees = Number(this.transaction.purchaseAmountDollars) + (transactionFee * 2);
       let suggestedSellTotal = this.transaction.suggestedSellPrice * this.transaction.cryptoQuantity;
       this.potentialProfit = suggestedSellTotal - purchaseCostAfterFees;
+    }
+  }
+
+  /**
+   * Save the current transaction.
+   */
+  saveTransaction() {
+    if (this.transactionForm.valid) {
+      this.calculateSuggestedSalePrice();
+
+      if (this.navParams.get('isUpdate')) {
+        this.transactionProvider.updateTransaction(this.transaction);
+      } else {
+        this.transactionProvider.createTransaction(this.transaction);
+      }
+
+      this.navCtrl.pop();
     }
   }
 

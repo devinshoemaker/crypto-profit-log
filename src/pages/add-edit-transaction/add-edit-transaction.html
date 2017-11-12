@@ -9,7 +9,7 @@
 
 <ion-content padding>
 
-  <form [formGroup]="transactionForm">
+  <form [formGroup]="transactionForm" (ngSubmit)="saveTransaction()">
 
     <ion-item>
       <ion-label floating>Quantity</ion-label>
@@ -20,6 +20,10 @@
       <ion-label floating>Price</ion-label>
       <ion-input type="number" formControlName="currentCryptoPrice"></ion-input>
     </ion-item>
+
+    <ion-fab right bottom>
+      <button ion-fab><ion-icon name="checkmark"></ion-icon></button>
+    </ion-fab>
 
   </form>
 
