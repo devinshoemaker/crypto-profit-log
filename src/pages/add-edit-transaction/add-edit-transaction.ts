@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 /**
- * Generated class for the AddEditTransactionPage page.
+ * Create or edit a crypto currency transaction.
  *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
+ * @author Devin Shoemaker (devinshoe@gmail.com)
  */
 
 @IonicPage()
@@ -15,11 +15,15 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AddEditTransactionPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  transactionForm: FormGroup;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder) {
+    this.transactionForm = formBuilder.group({
+      currentCryptoPrice: ['', Validators.required],
+      cryptoQuantity: ['', Validators.required]
+    });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AddEditTransactionPage');
-  }
+  ionViewDidLoad() {}
 
 }

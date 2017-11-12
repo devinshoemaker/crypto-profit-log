@@ -9,4 +9,18 @@
 
 <ion-content padding>
 
+  <form [formGroup]="transactionForm">
+
+    <ion-item>
+      <ion-label floating>Quantity</ion-label>
+      <ion-input type="number" formControlName="cryptoQuantity"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Price</ion-label>
+      <ion-input type="number" formControlName="currentCryptoPrice"></ion-input>
+    </ion-item>
+
+  </form>
+
 </ion-content>
