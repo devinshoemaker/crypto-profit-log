@@ -31,7 +31,7 @@ export class HomePage {
   }
 
   viewTransaction(transaction) {
-    this.navCtrl.push(TransactionPage, { transaction: transaction, isUpdate: true });
+    this.navCtrl.push(AddEditTransactionPage, { transaction: transaction, isUpdate: true });
   }
 
   archiveTransaction(transaction) {

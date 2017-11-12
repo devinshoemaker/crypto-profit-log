@@ -33,6 +33,10 @@ export class AddEditTransactionPage {
       currentCryptoPrice: ['', Validators.required],
       cryptoQuantity: ['', Validators.required]
     });
+
+    if (this.navParams.get('transaction')) {
+      this.transaction = this.navParams.get('transaction');
+    }
   }
 
   ionViewDidLoad() {}
