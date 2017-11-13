@@ -5,6 +5,6 @@ class Transaction {
   cryptoQuantity: number;
   breakEvenPrice: number;
   suggestedSellPrice: number;
-  active: boolean;
+  complete: boolean;
 
 }

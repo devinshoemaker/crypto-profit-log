@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { TransactionPage } from "../transaction/transaction";
 import { TransactionProvider } from '../../providers/transaction/transaction';
+import { AddEditTransactionPage } from '../add-edit-transaction/add-edit-transaction';
 
 @Component({
   selector: 'page-home',
@@ -26,15 +26,15 @@ export class HomePage {
   }
 
   newTransaction() {
-    this.navCtrl.push(TransactionPage);
+    this.navCtrl.push(AddEditTransactionPage);
   }
 
   viewTransaction(transaction) {
-    this.navCtrl.push(TransactionPage, { transaction: transaction, isUpdate: true });
+    this.navCtrl.push(AddEditTransactionPage, { transaction: transaction, isUpdate: true });
   }
 
   archiveTransaction(transaction) {
-    transaction.active = false;
+    transaction.complete = !transaction.complete;
     this.transactionService.updateTransaction(transaction);
   }
 
