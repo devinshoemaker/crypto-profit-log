@@ -8,7 +8,6 @@ import { TransactionProvider } from '../../providers/transaction/transaction';
  *
  * @author Devin Shoemaker (devinshoe@gmail.com)
  */
-
 @IonicPage()
 @Component({
   selector: 'page-add-edit-transaction',
