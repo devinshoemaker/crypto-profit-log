@@ -34,7 +34,7 @@ export class HomePage {
   }
 
   archiveTransaction(transaction) {
-    transaction.active = false;
+    transaction.complete = !transaction.complete;
     this.transactionService.updateTransaction(transaction);
   }
 

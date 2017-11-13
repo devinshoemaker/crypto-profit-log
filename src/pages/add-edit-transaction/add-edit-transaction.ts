@@ -25,7 +25,7 @@ export class AddEditTransactionPage {
     cryptoQuantity: null,
     breakEvenPrice: null,
     suggestedSellPrice: null,
-    active: true
+    complete: false
   };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public transactionProvider: TransactionProvider) {
