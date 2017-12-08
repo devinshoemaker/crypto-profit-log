@@ -47,7 +47,6 @@ export class AddEditTransactionPage {
     if (this.transactionForm.valid) {
       this.transaction.cryptoQuantity = this.transactionForm.controls.cryptoQuantity.value;
       this.transaction.currentCryptoPrice = this.transactionForm.controls.currentCryptoPrice.value;
-      this.transaction.purchaseAmountDollars = this.transaction.cryptoQuantity * this.transaction.currentCryptoPrice;
 
       let percentageFee = this.transaction.purchaseAmountDollars * 0.0149;
       let flatFee = 2.99;
@@ -59,6 +58,7 @@ export class AddEditTransactionPage {
         transactionFee = flatFee;
       }
 
+      this.transaction.purchaseAmountDollars = this.transaction.cryptoQuantity * this.transaction.currentCryptoPrice + transactionFee;
       this.transaction.breakEvenPrice = (Number(this.transaction.purchaseAmountDollars) + (transactionFee * 2)) / this.transaction.cryptoQuantity;
       this.transaction.suggestedSellPrice = this.transaction.breakEvenPrice * 1.01;
 
