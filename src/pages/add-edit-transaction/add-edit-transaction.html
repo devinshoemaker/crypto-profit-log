@@ -12,13 +12,21 @@
   <form [formGroup]="transactionForm" (ngSubmit)="saveTransaction()">
 
     <ion-item>
+      <ion-label>Exchange</ion-label>
+      <ion-select [(ngModel)]="exchange" formControlName="exchange">
+        <ion-option value="GDAX">GDAX</ion-option>
+        <ion-option value="COINBASE">Coinbase</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
       <ion-label floating>Quantity</ion-label>
       <ion-input type="number" formControlName="cryptoQuantity" [(ngModel)]="transaction.cryptoQuantity"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label floating>Price</ion-label>
-      <ion-input type="number" formControlName="currentCryptoPrice"[(ngModel)]="transaction.currentCryptoPrice"></ion-input>
+      <ion-input type="number" formControlName="currentCryptoPrice" [(ngModel)]="transaction.currentCryptoPrice"></ion-input>
     </ion-item>
 
     <ion-fab right bottom>
