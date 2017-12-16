@@ -28,6 +28,11 @@ export class TransactionProvider {
     this.db.sync(this.remote, options);
   }
 
+  /**
+   * Get all transactions from CouchDB.
+   *
+   * @returns {Promise<any>} Promise to retrieve and store transactions.
+   */
   getAllTransactions() {
     if (this.data) {
       return Promise.resolve(this.data);
@@ -54,22 +59,42 @@ export class TransactionProvider {
     });
   }
 
+  /**
+   * Create and store a new transaction.
+   *
+   * @param transaction A new transaction to be saved.
+   */
   createTransaction(transaction) {
     this.db.post(transaction);
   }
 
+  /**
+   * Update an existing transaction.
+   *
+   * @param transaction An updated transaction to be saved.
+   */
   updateTransaction(transaction) {
     this.db.put(transaction).catch((err) => {
       console.log(err);
     });
   }
 
+  /**
+   * Delete an existing transaction.
+   *
+   * @param transaction A transaction to be deleted.
+   */
   deleteTransaction(transaction) {
     this.db.remove(transaction).catch((err) => {
       console.log(err);
     });
   }
 
+  /**
+   * Update local list of transactions if a change in the PouchDB instance is detected.
+   *
+   * @param change The modified transaction.
+   */
   handleChange(change) {
     let changedDoc = null;
     let changedIndex = null;
