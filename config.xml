@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.devinshoemaker.coinbase-profit" version="0.1.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.devinshoemaker.CoinbaseProfit" version="0.1.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Coinbase Profit</name>
     <description>A crypto currency purchase and profit tracker.</description>
     <author email="devinshoe@gmail.com" href="http://ionicframework.com/">Devin Shoemaker</author>
