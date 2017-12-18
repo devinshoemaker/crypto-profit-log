@@ -13,7 +13,7 @@
 
     <ion-item>
       <ion-label>Exchange</ion-label>
-      <ion-select [(ngModel)]="exchange" formControlName="exchange">
+      <ion-select formControlName="exchange" [(ngModel)]="transaction.exchange">
         <ion-option value="GDAX">GDAX</ion-option>
         <ion-option value="COINBASE">Coinbase</ion-option>
       </ion-select>

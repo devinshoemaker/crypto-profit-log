@@ -18,11 +18,11 @@ export class AddEditTransactionPage {
   GDAX = "GDAX";
   COINBASE = "COINBASE";
 
-  exchange: string;
   transactionForm: FormGroup;
   potentialProfit: number;
 
   transaction: Transaction = {
+    exchange: null,
     purchaseAmountDollars: null,
     currentCryptoPrice: null,
     cryptoQuantity: null,
@@ -52,6 +52,7 @@ export class AddEditTransactionPage {
    */
   calculateSuggestedSalePrice() {
     if (this.transactionForm.valid) {
+      this.transaction.exchange = this.transactionForm.controls.exchange.value;
       this.transaction.cryptoQuantity = this.transactionForm.controls.cryptoQuantity.value;
       this.transaction.currentCryptoPrice = this.transactionForm.controls.currentCryptoPrice.value;
 
@@ -73,9 +74,9 @@ export class AddEditTransactionPage {
    * @returns {number} The fee for the current transaction.
    */
   calculateTransactionFee() {
-    if (this.exchange === this.GDAX) {
+    if (this.transactionForm.controls.exchange.value === this.GDAX) {
       return 0.0;
-    } else if (this.exchange === this.COINBASE) {
+    } else if (this.transactionForm.controls.exchange.value === this.COINBASE) {
       let percentageFee = this.transaction.purchaseAmountDollars * 0.0149;
       let flatFee = 2.99;
 
