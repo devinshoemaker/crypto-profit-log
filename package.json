@@ -1,5 +1,5 @@
 {
-  "name": "CoinbaseProfit",
+  "name": "CryptoProfitLog",
   "version": "0.1.3",
   "author": "Devin Shoemaker",
   "homepage": "http://ionicframework.com/",
@@ -45,7 +45,7 @@
     "ionic": "3.19.0",
     "typescript": "2.6.2"
   },
-  "description": "A crypto currency purchase and profit tracker.",
+  "description": "A crypto currency purchase and profit log.",
   "cordova": {
     "plugins": {
       "cordova-plugin-console": {},
