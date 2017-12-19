@@ -1,5 +1,5 @@
-# Coinbase Profit
-A crypto currency purchase and profit tracker.
+# Crypto Profit Log
+A crypto currency purchase and profit log.
 
 ## Run this project
 
