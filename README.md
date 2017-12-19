@@ -1,5 +1,9 @@
-# Coinbase Profit
-A crypto currency purchase and profit tracker.
+# Crypto Profit Log
+A crypto currency purchase and profit log.
+
+## Features
+- Calculate the cost of crypto currency as well as a recommended sell price.
+- Save transactions to a log to keep track of the recommended sell price.
 
 ## Run this project
 
