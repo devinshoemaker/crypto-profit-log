@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TransactionProvider } from '../../providers/transaction/transaction';
+import { Exchange } from '../../enums/exchange';
 
 /**
  * Create or edit a crypto currency transaction.
@@ -14,9 +15,6 @@ import { TransactionProvider } from '../../providers/transaction/transaction';
   templateUrl: 'add-edit-transaction.html',
 })
 export class AddEditTransactionPage {
-
-  GDAX = "GDAX";
-  COINBASE = "COINBASE";
 
   transactionForm: FormGroup;
   potentialProfit: number;
@@ -41,7 +39,7 @@ export class AddEditTransactionPage {
     if (this.navParams.get('transaction')) {
       this.transaction = this.navParams.get('transaction');
     } else {
-      this.transaction.exchange = 'GDAX';
+      this.transaction.exchange = Exchange.GDAX;
     }
   }
 
@@ -74,9 +72,9 @@ export class AddEditTransactionPage {
    * @returns {number} The fee for the current transaction.
    */
   calculateTransactionFee() {
-    if (this.transactionForm.controls.exchange.value === this.GDAX) {
+    if (this.transactionForm.controls.exchange.value === Exchange.GDAX) {
       return 0.0;
-    } else if (this.transactionForm.controls.exchange.value === this.COINBASE) {
+    } else if (this.transactionForm.controls.exchange.value === Exchange.COINBASE) {
       let percentageFee = this.transaction.purchaseAmountDollars * 0.0149;
       let flatFee = 2.99;
 
