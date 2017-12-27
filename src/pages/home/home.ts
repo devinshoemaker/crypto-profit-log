@@ -62,4 +62,13 @@ export class HomePage {
     this.transactionService.updateTransaction(transaction);
   }
 
+  /**
+   * Delete a transaction.
+   *
+   * @param transaction Existing transaction to be deleted.
+   */
+  deleteTransaction(transaction) {
+    this.transactionService.deleteTransaction(transaction);
+  }
+
 }
