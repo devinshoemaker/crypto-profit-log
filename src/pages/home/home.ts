@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { AlertController, NavController } from 'ionic-angular';
 import { TransactionProvider } from '../../providers/transaction/transaction';
 import { AddEditTransactionPage } from '../add-edit-transaction/add-edit-transaction';
 
@@ -16,7 +16,7 @@ export class HomePage {
 
   transactions: Transaction[];
 
-  constructor(public navCtrl: NavController, public transactionService: TransactionProvider) {
+  constructor(public navCtrl: NavController, public transactionService: TransactionProvider, private alertCtrl: AlertController) {
 
   }
 
@@ -60,6 +60,30 @@ export class HomePage {
   archiveTransaction(transaction) {
     transaction.complete = !transaction.complete;
     this.transactionService.updateTransaction(transaction);
+  }
+
+  /**
+   * Display an alert and delete a transaction if the user confirms.
+   *
+   * @param transaction Existing transaction to be deleted.
+   */
+  deleteTransaction(transaction) {
+    let alert = this.alertCtrl.create({
+      message: 'Delete this transaction?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            this.transactionService.deleteTransaction(transaction);
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
 }
