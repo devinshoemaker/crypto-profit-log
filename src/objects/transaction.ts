@@ -1,6 +1,7 @@
 class Transaction {
 
   exchange: string;
+  cryptoType: string;
   purchaseAmountDollars: number;
   currentCryptoPrice: number;
   cryptoQuantity: number;
