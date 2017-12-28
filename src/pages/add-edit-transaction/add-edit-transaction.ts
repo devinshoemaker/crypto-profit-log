@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TransactionProvider } from '../../providers/transaction/transaction';
+import { Exchange } from '../../enums/exchange';
+import { CryptoType } from '../../enums/crypto-type';
 
 /**
  * Create or edit a crypto currency transaction.
@@ -15,14 +17,12 @@ import { TransactionProvider } from '../../providers/transaction/transaction';
 })
 export class AddEditTransactionPage {
 
-  GDAX = "GDAX";
-  COINBASE = "COINBASE";
-
   transactionForm: FormGroup;
   potentialProfit: number;
 
   transaction: Transaction = {
     exchange: null,
+    cryptoType: null,
     purchaseAmountDollars: null,
     currentCryptoPrice: null,
     cryptoQuantity: null,
@@ -34,6 +34,7 @@ export class AddEditTransactionPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public transactionProvider: TransactionProvider) {
     this.transactionForm = formBuilder.group({
       exchange: ['', Validators.required],
+      cryptoType: ['', Validators.required],
       currentCryptoPrice: ['', Validators.required],
       cryptoQuantity: ['', Validators.required]
     });
@@ -41,7 +42,8 @@ export class AddEditTransactionPage {
     if (this.navParams.get('transaction')) {
       this.transaction = this.navParams.get('transaction');
     } else {
-      this.transaction.exchange = 'GDAX';
+      this.transaction.exchange = Exchange.GDAX;
+      this.transaction.cryptoType = CryptoType.BTC;
     }
   }
 
@@ -52,10 +54,6 @@ export class AddEditTransactionPage {
    */
   calculateSuggestedSalePrice() {
     if (this.transactionForm.valid) {
-      this.transaction.exchange = this.transactionForm.controls.exchange.value;
-      this.transaction.cryptoQuantity = this.transactionForm.controls.cryptoQuantity.value;
-      this.transaction.currentCryptoPrice = this.transactionForm.controls.currentCryptoPrice.value;
-
       let transactionFee = this.calculateTransactionFee();
 
       this.transaction.purchaseAmountDollars = this.transaction.cryptoQuantity * this.transaction.currentCryptoPrice + transactionFee;
@@ -74,9 +72,9 @@ export class AddEditTransactionPage {
    * @returns {number} The fee for the current transaction.
    */
   calculateTransactionFee() {
-    if (this.transactionForm.controls.exchange.value === this.GDAX) {
+    if (this.transactionForm.controls.exchange.value === Exchange.GDAX) {
       return 0.0;
-    } else if (this.transactionForm.controls.exchange.value === this.COINBASE) {
+    } else if (this.transactionForm.controls.exchange.value === Exchange.COINBASE) {
       let percentageFee = this.transaction.purchaseAmountDollars * 0.0149;
       let flatFee = 2.99;
 

@@ -15,7 +15,18 @@
       <ion-label>Exchange</ion-label>
       <ion-select formControlName="exchange" [(ngModel)]="transaction.exchange">
         <ion-option value="GDAX">GDAX</ion-option>
-        <ion-option value="COINBASE">Coinbase</ion-option>
+        <ion-option value="Coinbase">Coinbase</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Crypto</ion-label>
+      <ion-select formControlName="cryptoType" [(ngModel)]="transaction.cryptoType">
+        <ion-option value="Bitcoin">Bitcoin</ion-option>
+        <ion-option value="Bitcoin Cash">Bitcoin Cash</ion-option>
+        <ion-option value="Bitcoin Segwit2x">Bitcoin Segwit2x</ion-option>
+        <ion-option value="Ethereum">Ethereum</ion-option>
+        <ion-option value="Litecoin">Litecoin</ion-option>
       </ion-select>
     </ion-item>
 

@@ -15,10 +15,11 @@
 
         <div (click)="viewTransaction(transaction)">
           <ion-card-header>
-            Crypto: {{transaction.cryptoQuantity}}
+            Quantity: {{transaction.cryptoQuantity}}
           </ion-card-header>
 
           <ion-card-content>
+            Crypto: {{transaction.cryptoType}}<br>
             Price: ${{transaction.purchaseAmountDollars}}<br>
             Break even: ${{transaction.breakEvenPrice}}<br>
             Complete: {{transaction.complete}}
@@ -29,6 +30,10 @@
           <button ion-button icon-left clear item-end (click)="archiveTransaction(transaction)">
             <ion-icon name="archive"></ion-icon>
             Complete
+          </button>
+          <button ion-button icon-left clear item-end (click)="deleteTransaction(transaction)">
+            <ion-icon name="trash"></ion-icon>
+            Delete
           </button>
         </ion-item>
 
