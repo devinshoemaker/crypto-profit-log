@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TransactionProvider } from '../../providers/transaction/transaction';
 import { Exchange } from '../../enums/exchange';
+import { CryptoType } from '../../enums/crypto-type';
 
 /**
  * Create or edit a crypto currency transaction.
@@ -21,6 +22,7 @@ export class AddEditTransactionPage {
 
   transaction: Transaction = {
     exchange: null,
+    cryptoType: null,
     purchaseAmountDollars: null,
     currentCryptoPrice: null,
     cryptoQuantity: null,
@@ -32,6 +34,7 @@ export class AddEditTransactionPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public transactionProvider: TransactionProvider) {
     this.transactionForm = formBuilder.group({
       exchange: ['', Validators.required],
+      cryptoType: ['', Validators.required],
       currentCryptoPrice: ['', Validators.required],
       cryptoQuantity: ['', Validators.required]
     });
@@ -40,6 +43,7 @@ export class AddEditTransactionPage {
       this.transaction = this.navParams.get('transaction');
     } else {
       this.transaction.exchange = Exchange.GDAX;
+      this.transaction.cryptoType = CryptoType.BTC;
     }
   }
 
@@ -51,6 +55,7 @@ export class AddEditTransactionPage {
   calculateSuggestedSalePrice() {
     if (this.transactionForm.valid) {
       this.transaction.exchange = this.transactionForm.controls.exchange.value;
+      this.transaction.cryptoType = this.transactionForm.controls.cryptoType.value;
       this.transaction.cryptoQuantity = this.transactionForm.controls.cryptoQuantity.value;
       this.transaction.currentCryptoPrice = this.transactionForm.controls.currentCryptoPrice.value;
 

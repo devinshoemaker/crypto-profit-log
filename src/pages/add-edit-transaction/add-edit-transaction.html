@@ -20,6 +20,17 @@
     </ion-item>
 
     <ion-item>
+      <ion-label>Crypto</ion-label>
+      <ion-select formControlName="cryptoType" [(ngModel)]="transaction.cryptoType">
+        <ion-option value="Bitcoin">Bitcoin</ion-option>
+        <ion-option value="Bitcoin Cash">Bitcoin Cash</ion-option>
+        <ion-option value="Bitcoin Segwit2x">Bitcoin Segwit2x</ion-option>
+        <ion-option value="Ethereum">Ethereum</ion-option>
+        <ion-option value="Litecoin">Litecoin</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
       <ion-label floating>Quantity</ion-label>
       <ion-input type="number" formControlName="cryptoQuantity" [(ngModel)]="transaction.cryptoQuantity"></ion-input>
     </ion-item>
