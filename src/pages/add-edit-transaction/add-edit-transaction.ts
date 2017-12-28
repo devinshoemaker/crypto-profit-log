@@ -54,11 +54,6 @@ export class AddEditTransactionPage {
    */
   calculateSuggestedSalePrice() {
     if (this.transactionForm.valid) {
-      this.transaction.exchange = this.transactionForm.controls.exchange.value;
-      this.transaction.cryptoType = this.transactionForm.controls.cryptoType.value;
-      this.transaction.cryptoQuantity = this.transactionForm.controls.cryptoQuantity.value;
-      this.transaction.currentCryptoPrice = this.transactionForm.controls.currentCryptoPrice.value;
-
       let transactionFee = this.calculateTransactionFee();
 
       this.transaction.purchaseAmountDollars = this.transaction.cryptoQuantity * this.transaction.currentCryptoPrice + transactionFee;
