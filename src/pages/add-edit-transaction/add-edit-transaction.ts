@@ -42,7 +42,7 @@ export class AddEditTransactionPage {
     if (this.navParams.get('transaction')) {
       this.transaction = this.navParams.get('transaction');
     } else {
-      this.transaction.exchange = Exchange.GDAX;
+      this.transaction.exchange = Exchange.BINANCE;
       this.transaction.cryptoType = CryptoType.BTC;
     }
   }
@@ -57,12 +57,34 @@ export class AddEditTransactionPage {
       let transactionFee = this.calculateTransactionFee();
 
       this.transaction.purchaseAmountDollars = this.transaction.cryptoQuantity * this.transaction.currentCryptoPrice + transactionFee;
-      this.transaction.breakEvenPrice = (Number(this.transaction.purchaseAmountDollars) + (transactionFee * 2)) / this.transaction.cryptoQuantity;
-      this.transaction.suggestedSellPrice = this.transaction.breakEvenPrice * 1.01;
+      this.transaction.breakEvenPrice = this.calculateBreakEvenPrice();
+      this.transaction.suggestedSellPrice = this.transaction.breakEvenPrice * 1.1;
 
-      let purchaseCostAfterFees = Number(this.transaction.purchaseAmountDollars) + (transactionFee * 2);
+      let purchaseCostAfterFees = Number(this.transaction.purchaseAmountDollars);
       let suggestedSellTotal = this.transaction.suggestedSellPrice * this.transaction.cryptoQuantity;
       this.potentialProfit = suggestedSellTotal - purchaseCostAfterFees;
+    }
+  }
+
+  /**
+   * Calculate the break even price for the current transaction.
+   *
+   * @returns {number} The break even price for the current transaction.
+   */
+  calculateBreakEvenPrice() {
+    if (this.transactionForm.controls.exchange.value === Exchange.BINANCE) {
+      return this.transaction.currentCryptoPrice * 1.005;
+    } else if (this.transactionForm.controls.exchange.value === Exchange.GDAX) {
+      return 0.0;
+    } else if (this.transactionForm.controls.exchange.value === Exchange.COINBASE) {
+      let percentageFee = this.transaction.purchaseAmountDollars * 0.0149;
+      let flatFee = 2.99;
+
+      if (percentageFee > flatFee) {
+        return percentageFee;
+      } else {
+        return flatFee;
+      }
     }
   }
 
@@ -72,7 +94,9 @@ export class AddEditTransactionPage {
    * @returns {number} The fee for the current transaction.
    */
   calculateTransactionFee() {
-    if (this.transactionForm.controls.exchange.value === Exchange.GDAX) {
+    if (this.transactionForm.controls.exchange.value === Exchange.BINANCE) {
+      return Number(this.transaction.purchaseAmountDollars) * 0.001;
+    } else if (this.transactionForm.controls.exchange.value === Exchange.GDAX) {
       return 0.0;
     } else if (this.transactionForm.controls.exchange.value === Exchange.COINBASE) {
       let percentageFee = this.transaction.purchaseAmountDollars * 0.0149;
