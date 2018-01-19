@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TransactionProvider } from '../../providers/transaction/transaction';
-import { Exchange } from '../../enums/exchange';
 import { CryptoType } from '../../enums/crypto-type';
 
 /**
@@ -19,6 +18,7 @@ export class AddEditTransactionPage {
 
   transactionForm: FormGroup;
   potentialProfit: number;
+  exchanges: Exchange[];
 
   transaction: Transaction = {
     exchange: null,
@@ -39,10 +39,12 @@ export class AddEditTransactionPage {
       cryptoQuantity: ['', Validators.required]
     });
 
+    this.initializeExchanges();
+
     if (this.navParams.get('transaction')) {
       this.transaction = this.navParams.get('transaction');
     } else {
-      this.transaction.exchange = Exchange.BINANCE;
+      this.transaction.exchange = this.getExchangeByName('Binance').name;
       this.transaction.cryptoType = CryptoType.BTC;
     }
   }
@@ -50,15 +52,32 @@ export class AddEditTransactionPage {
   ionViewDidLoad() {}
 
   /**
+   * Initialize the available exchanges.
+   */
+  initializeExchanges() {
+    this.exchanges = [];
+
+    let binanceExchange: Exchange = {
+      name: 'Binance',
+      transactionFeePercentage: 0.001
+    };
+    this.exchanges.push(binanceExchange);
+
+    let gdaxExchange: Exchange = {
+      name: 'GDAX',
+      transactionFeePercentage: 0
+    };
+    this.exchanges.push(gdaxExchange);
+  }
+
+  /**
    * Calculate the transaction cost and suggested sale prices.
    */
-  calculateSuggestedSalePrice() {
+  calculate() {
     if (this.transactionForm.valid) {
-      let transactionFee = this.calculateTransactionFee();
-
-      this.transaction.purchaseAmountDollars = this.transaction.cryptoQuantity * this.transaction.currentCryptoPrice + transactionFee;
+      this.transaction.purchaseAmountDollars = this.calculatePurchaseCost();
       this.transaction.breakEvenPrice = this.calculateBreakEvenPrice();
-      this.transaction.suggestedSellPrice = this.transaction.breakEvenPrice * 1.1;
+      this.transaction.suggestedSellPrice = this.calculateSuggestedSellPrice();
 
       let purchaseCostAfterFees = Number(this.transaction.purchaseAmountDollars);
       let suggestedSellTotal = this.transaction.suggestedSellPrice * this.transaction.cryptoQuantity;
@@ -67,47 +86,42 @@ export class AddEditTransactionPage {
   }
 
   /**
-   * Calculate the break even price for the current transaction.
+   * Retrieve an exchange and it's information by the exchanges name.
+   *
+   * @param exchangeName The name of the exchange.
+   * @returns {Exchange | undefined} The desired exchange and it's information.
+   */
+  getExchangeByName(exchangeName) {
+    return this.exchanges.find(function (exchange) {
+      return exchange.name === exchangeName;
+    });
+  }
+
+  /**
+   * Calculate the cost of the transaction in the currency the user is buying in.
+   *
+   * @returns {number} The cost of the users purchase.
+   */
+  calculatePurchaseCost() {
+    return (this.transaction.cryptoQuantity * this.transaction.currentCryptoPrice) * (1 + (this.getExchangeByName(this.transaction.exchange).transactionFeePercentage * 2));
+  }
+
+  /**
+   * Calculate the price that the crypto must be at for the user to break even.
    *
    * @returns {number} The break even price for the current transaction.
    */
   calculateBreakEvenPrice() {
-    if (this.transactionForm.controls.exchange.value === Exchange.BINANCE) {
-      return this.transaction.currentCryptoPrice * 1.005;
-    } else if (this.transactionForm.controls.exchange.value === Exchange.GDAX) {
-      return 0.0;
-    } else if (this.transactionForm.controls.exchange.value === Exchange.COINBASE) {
-      let percentageFee = this.transaction.purchaseAmountDollars * 0.0149;
-      let flatFee = 2.99;
-
-      if (percentageFee > flatFee) {
-        return percentageFee;
-      } else {
-        return flatFee;
-      }
-    }
+    return this.transaction.currentCryptoPrice * (1 + (this.getExchangeByName(this.transaction.exchange).transactionFeePercentage * 2));
   }
 
   /**
-   * Calculate the fee for the current transaction.
+   * Calculate the recommended price of the crypto for the user to make a decent profit.
    *
-   * @returns {number} The fee for the current transaction.
+   * @returns {number} The recommended sell price for the crypto.
    */
-  calculateTransactionFee() {
-    if (this.transactionForm.controls.exchange.value === Exchange.BINANCE) {
-      return Number(this.transaction.purchaseAmountDollars) * 0.001;
-    } else if (this.transactionForm.controls.exchange.value === Exchange.GDAX) {
-      return 0.0;
-    } else if (this.transactionForm.controls.exchange.value === Exchange.COINBASE) {
-      let percentageFee = this.transaction.purchaseAmountDollars * 0.0149;
-      let flatFee = 2.99;
-
-      if (percentageFee > flatFee) {
-        return percentageFee;
-      } else {
-        return flatFee;
-      }
-    }
+  calculateSuggestedSellPrice() {
+    return this.transaction.breakEvenPrice * 1.1;
   }
 
   /**
@@ -115,7 +129,7 @@ export class AddEditTransactionPage {
    */
   saveTransaction() {
     if (this.transactionForm.valid) {
-      this.calculateSuggestedSalePrice();
+      this.calculate();
 
       if (this.navParams.get('isUpdate')) {
         this.transactionProvider.updateTransaction(this.transaction);
