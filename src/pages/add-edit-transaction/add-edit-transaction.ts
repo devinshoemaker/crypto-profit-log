@@ -24,7 +24,7 @@ export class AddEditTransactionPage {
     exchange: null,
     cryptoType: null,
     purchaseCost: null,
-    currentCryptoPrice: null,
+    cryptoPrice: null,
     cryptoQuantity: null,
     breakEvenPrice: null,
     suggestedSellPrice: null,
@@ -36,7 +36,7 @@ export class AddEditTransactionPage {
     this.transactionForm = formBuilder.group({
       exchange: ['', Validators.required],
       cryptoType: ['', Validators.required],
-      currentCryptoPrice: ['', Validators.required],
+      cryptoPrice: ['', Validators.required],
       cryptoQuantity: ['', Validators.required]
     });
 
@@ -69,7 +69,7 @@ export class AddEditTransactionPage {
    * @returns {number} The cost of the users purchase.
    */
   calculatePurchaseCost() {
-    return (this.transaction.cryptoQuantity * this.transaction.currentCryptoPrice) * (1 + (this.exchangeProvider.getExchangeByName(this.transaction.exchange).transactionFeePercentage * 2));
+    return (this.transaction.cryptoQuantity * this.transaction.cryptoPrice) * (1 + (this.exchangeProvider.getExchangeByName(this.transaction.exchange).transactionFeePercentage * 2));
   }
 
   /**
@@ -78,7 +78,7 @@ export class AddEditTransactionPage {
    * @returns {number} The break even price for the current transaction.
    */
   calculateBreakEvenPrice() {
-    return this.transaction.currentCryptoPrice * (1 + (this.exchangeProvider.getExchangeByName(this.transaction.exchange).transactionFeePercentage * 2));
+    return this.transaction.cryptoPrice * (1 + (this.exchangeProvider.getExchangeByName(this.transaction.exchange).transactionFeePercentage * 2));
   }
 
   /**
