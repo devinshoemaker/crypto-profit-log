@@ -18,7 +18,6 @@ import { ExchangeProvider } from '../../providers/exchange/exchange';
 export class AddEditTransactionPage {
 
   transactionForm: FormGroup;
-  potentialProfit: number;
   exchanges: Exchange[];
 
   transaction: Transaction = {
@@ -61,10 +60,6 @@ export class AddEditTransactionPage {
       this.transaction.purchaseAmountDollars = this.calculatePurchaseCost();
       this.transaction.breakEvenPrice = this.calculateBreakEvenPrice();
       this.transaction.suggestedSellPrice = this.calculateSuggestedSellPrice();
-
-      let purchaseCostAfterFees = Number(this.transaction.purchaseAmountDollars);
-      let suggestedSellTotal = this.transaction.suggestedSellPrice * this.transaction.cryptoQuantity;
-      this.potentialProfit = suggestedSellTotal - purchaseCostAfterFees;
     }
   }
 
