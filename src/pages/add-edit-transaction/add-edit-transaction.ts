@@ -23,7 +23,7 @@ export class AddEditTransactionPage {
   transaction: Transaction = {
     exchange: null,
     cryptoType: null,
-    purchaseAmountDollars: null,
+    purchaseCost: null,
     currentCryptoPrice: null,
     cryptoQuantity: null,
     breakEvenPrice: null,
@@ -57,7 +57,7 @@ export class AddEditTransactionPage {
    */
   calculate() {
     if (this.transactionForm.valid) {
-      this.transaction.purchaseAmountDollars = this.calculatePurchaseCost();
+      this.transaction.purchaseCost = this.calculatePurchaseCost();
       this.transaction.breakEvenPrice = this.calculateBreakEvenPrice();
       this.transaction.suggestedSellPrice = this.calculateSuggestedSellPrice();
     }

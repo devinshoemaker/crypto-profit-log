@@ -2,7 +2,7 @@ class Transaction {
 
   exchange: string;
   cryptoType: string;
-  purchaseAmountDollars: number;
+  purchaseCost: number;
   currentCryptoPrice: number;
   cryptoQuantity: number;
   breakEvenPrice: number;
