@@ -14,7 +14,7 @@ import { AddEditTransactionPage } from '../add-edit-transaction/add-edit-transac
 })
 export class HomePage {
 
-  transactions: Transaction[];
+  public transactions: Transaction[];
 
   constructor(public navCtrl: NavController, public transactionService: TransactionProvider, private alertCtrl: AlertController) {
 
@@ -30,7 +30,7 @@ export class HomePage {
   /**
    * Get all transactions from the transaction provider.
    */
-  getTransactions() {
+  private getTransactions() {
     this.transactionService.getAllTransactions().then((data) => {
       this.transactions = data;
     });
@@ -39,7 +39,7 @@ export class HomePage {
   /**
    * Navigate to a view to create a new transaction.
    */
-  newTransaction() {
+  public newTransaction() {
     this.navCtrl.push(AddEditTransactionPage);
   }
 
@@ -48,7 +48,7 @@ export class HomePage {
    *
    * @param transaction Existing transaction to be edited.
    */
-  viewTransaction(transaction) {
+  public viewTransaction(transaction) {
     this.navCtrl.push(AddEditTransactionPage, { transaction: transaction, isUpdate: true });
   }
 
@@ -57,7 +57,7 @@ export class HomePage {
    *
    * @param transaction
    */
-  archiveTransaction(transaction) {
+  public archiveTransaction(transaction) {
     transaction.complete = !transaction.complete;
     this.transactionService.updateTransaction(transaction);
   }
@@ -67,7 +67,7 @@ export class HomePage {
    *
    * @param transaction Existing transaction to be deleted.
    */
-  deleteTransaction(transaction) {
+  public deleteTransaction(transaction) {
     let alert = this.alertCtrl.create({
       message: 'Delete this transaction?',
       buttons: [

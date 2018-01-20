@@ -17,10 +17,10 @@ import { ExchangeProvider } from '../../providers/exchange/exchange';
 })
 export class AddEditTransactionPage {
 
-  transactionForm: FormGroup;
-  exchanges: Exchange[];
+  public transactionForm: FormGroup;
+  public exchanges: Exchange[];
 
-  transaction: Transaction = {
+  public transaction: Transaction = {
     exchange: null,
     cryptoType: null,
     purchaseCost: null,
@@ -55,7 +55,7 @@ export class AddEditTransactionPage {
   /**
    * Calculate the transaction cost and suggested sale prices.
    */
-  calculate() {
+  public calculate() {
     if (this.transactionForm.valid) {
       this.transaction.purchaseCost = this.calculatePurchaseCost();
       this.transaction.breakEvenPrice = this.calculateBreakEvenPrice();
@@ -68,7 +68,7 @@ export class AddEditTransactionPage {
    *
    * @returns {number} The cost of the users purchase.
    */
-  calculatePurchaseCost() {
+  private calculatePurchaseCost() {
     return (this.transaction.cryptoQuantity * this.transaction.cryptoPrice) * (1 + (this.exchangeProvider.getExchangeByName(this.transaction.exchange).transactionFeePercentage * 2));
   }
 
@@ -77,7 +77,7 @@ export class AddEditTransactionPage {
    *
    * @returns {number} The break even price for the current transaction.
    */
-  calculateBreakEvenPrice() {
+  private calculateBreakEvenPrice() {
     return this.transaction.cryptoPrice * (1 + (this.exchangeProvider.getExchangeByName(this.transaction.exchange).transactionFeePercentage * 2));
   }
 
@@ -86,14 +86,14 @@ export class AddEditTransactionPage {
    *
    * @returns {number} The recommended sell price for the crypto.
    */
-  calculateSuggestedSellPrice() {
+  private calculateSuggestedSellPrice() {
     return this.transaction.breakEvenPrice * 1.1;
   }
 
   /**
    * Save the current transaction.
    */
-  saveTransaction() {
+  public saveTransaction() {
     if (this.transactionForm.valid) {
       this.calculate();
 

@@ -17,7 +17,7 @@ export class ExchangeProvider {
   /**
    * Initialize the available exchanges.
    */
-  initializeExchanges() {
+  private initializeExchanges() {
     this.exchanges = [];
 
     let binanceExchange: Exchange = {
@@ -38,7 +38,7 @@ export class ExchangeProvider {
    *
    * @returns {Exchange[]} A list of available exchanges.
    */
-  getExchanges() {
+  public getExchanges() {
     return this.exchanges;
   }
 
@@ -48,7 +48,7 @@ export class ExchangeProvider {
    * @param exchangeName The name of the exchange.
    * @returns {Exchange | undefined} The desired exchange and it's information.
    */
-  getExchangeByName(exchangeName) {
+  public getExchangeByName(exchangeName) {
     return this.exchanges.find(function (exchange) {
       return exchange.name === exchangeName;
     });

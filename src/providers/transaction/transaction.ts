@@ -10,9 +10,9 @@ import PouchDB from 'pouchdb';
 @Injectable()
 export class TransactionProvider {
 
-  data: any;
-  db: any;
-  remote: any;
+  private data: any;
+  private db: any;
+  private remote: any;
 
   constructor() {
     this.db = new PouchDB('crypto_profit_log');
@@ -33,7 +33,7 @@ export class TransactionProvider {
    *
    * @returns {Promise<any>} Promise to retrieve and store transactions.
    */
-  getAllTransactions() {
+  public getAllTransactions() {
     if (this.data) {
       return Promise.resolve(this.data);
     }
@@ -64,7 +64,7 @@ export class TransactionProvider {
    *
    * @param transaction A new transaction to be saved.
    */
-  createTransaction(transaction) {
+  public createTransaction(transaction) {
     this.db.post(transaction);
   }
 
@@ -73,7 +73,7 @@ export class TransactionProvider {
    *
    * @param transaction An updated transaction to be saved.
    */
-  updateTransaction(transaction) {
+  public updateTransaction(transaction) {
     this.db.put(transaction).catch((err) => {
       console.log(err);
     });
@@ -84,7 +84,7 @@ export class TransactionProvider {
    *
    * @param transaction A transaction to be deleted.
    */
-  deleteTransaction(transaction) {
+  public deleteTransaction(transaction) {
     this.db.remove(transaction).catch((err) => {
       console.log(err);
     });
@@ -95,7 +95,7 @@ export class TransactionProvider {
    *
    * @param change The modified transaction.
    */
-  handleChange(change) {
+  private handleChange(change) {
     let changedDoc = null;
     let changedIndex = null;
 
