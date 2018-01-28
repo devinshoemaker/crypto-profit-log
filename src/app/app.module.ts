@@ -10,6 +10,7 @@ import { AddEditTransactionPage } from '../pages/add-edit-transaction/add-edit-t
 
 import { CryptocurrencyProvider } from '../providers/cryptocurrency/cryptocurrency';
 import { ExchangeProvider } from '../providers/exchange/exchange';
+import { PouchDbProvider } from '../providers/pouch-db/pouch-db';
 import { TransactionProvider } from '../providers/transaction/transaction';
 
 @NgModule({
@@ -34,6 +35,7 @@ import { TransactionProvider } from '../providers/transaction/transaction';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CryptocurrencyProvider,
     ExchangeProvider,
+    PouchDbProvider,
     TransactionProvider
   ]
 })
