@@ -8,6 +8,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { AddEditTransactionPage } from '../pages/add-edit-transaction/add-edit-transaction';
 
+import { CryptocurrencyProvider } from '../providers/cryptocurrency/cryptocurrency';
 import { ExchangeProvider } from '../providers/exchange/exchange';
 import { TransactionProvider } from '../providers/transaction/transaction';
 
@@ -31,6 +32,7 @@ import { TransactionProvider } from '../providers/transaction/transaction';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    CryptocurrencyProvider,
     ExchangeProvider,
     TransactionProvider
   ]

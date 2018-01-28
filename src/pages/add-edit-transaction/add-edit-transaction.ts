@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TransactionProvider } from '../../providers/transaction/transaction';
-import { CryptoType } from '../../enums/crypto-type';
 import { ExchangeProvider } from '../../providers/exchange/exchange';
+import { CryptocurrencyProvider } from '../../providers/cryptocurrency/cryptocurrency';
 
 /**
  * Create or edit a crypto currency transaction.
@@ -18,7 +18,11 @@ import { ExchangeProvider } from '../../providers/exchange/exchange';
 export class AddEditTransactionPage {
 
   public transactionForm: FormGroup;
-  public exchanges: Exchange[];
+  public availableExchanges: Exchange[];
+  public availableCryptocurrencies: Cryptocurrency[];
+
+  private DEFAULT_EXCHANGE = 'Binance';
+  private DEFAULT_CRYPTOCURRENCY = 'BTC';
 
   public transaction: Transaction = {
     exchange: null,
@@ -32,7 +36,8 @@ export class AddEditTransactionPage {
   };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder,
-              private exchangeProvider: ExchangeProvider, public transactionProvider: TransactionProvider) {
+              private cryptocurrencyProvider: CryptocurrencyProvider, private exchangeProvider: ExchangeProvider,
+              public transactionProvider: TransactionProvider) {
     this.transactionForm = formBuilder.group({
       exchange: ['', Validators.required],
       cryptoType: ['', Validators.required],
@@ -40,13 +45,14 @@ export class AddEditTransactionPage {
       cryptoQuantity: ['', Validators.required]
     });
 
-    this.exchanges = exchangeProvider.getExchanges();
+    this.availableExchanges = exchangeProvider.getExchanges();
+    this.availableCryptocurrencies = cryptocurrencyProvider.getCryptocurrencies();
 
     if (this.navParams.get('transaction')) {
       this.transaction = this.navParams.get('transaction');
     } else {
-      this.transaction.exchange = this.exchangeProvider.getExchangeByName('Binance').name;
-      this.transaction.cryptoType = CryptoType.BTC;
+      this.transaction.exchange = this.exchangeProvider.getExchangeByName(this.DEFAULT_EXCHANGE).name;
+      this.transaction.cryptoType = this.cryptocurrencyProvider.getCryptocurrencyByAcronym(this.DEFAULT_CRYPTOCURRENCY).acronym;
     }
   }
 

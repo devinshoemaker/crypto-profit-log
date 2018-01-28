@@ -14,17 +14,14 @@
     <ion-item>
       <ion-label>Exchange</ion-label>
       <ion-select formControlName="exchange" [(ngModel)]="transaction.exchange">
-        <ion-option *ngFor="let exchange of exchanges" [value]="exchange.name">{{exchange.name}}</ion-option>
+        <ion-option *ngFor="let exchange of availableExchanges" [value]="exchange.name">{{exchange.name}}</ion-option>
       </ion-select>
     </ion-item>
 
     <ion-item>
       <ion-label>Crypto</ion-label>
       <ion-select formControlName="cryptoType" [(ngModel)]="transaction.cryptoType">
-        <ion-option value="BTC">BTC</ion-option>
-        <ion-option value="BCH">BCH</ion-option>
-        <ion-option value="ETH">ETH</ion-option>
-        <ion-option value="LTC">LTC</ion-option>
+        <ion-option *ngFor="let cryptocurrency of availableCryptocurrencies" [value]="cryptocurrency.acronym">{{cryptocurrency.acronym}}</ion-option>
       </ion-select>
     </ion-item>
 
