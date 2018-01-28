@@ -25,6 +25,7 @@ export class AddEditTransactionPage {
   private DEFAULT_CRYPTOCURRENCY = 'BTC';
 
   public transaction: Transaction = {
+    documentType: null,
     exchange: null,
     cryptoType: null,
     purchaseCost: null,

@@ -1,5 +1,6 @@
 class Transaction {
 
+  documentType: string;
   exchange: string;
   cryptoType: string;
   purchaseCost: number;
