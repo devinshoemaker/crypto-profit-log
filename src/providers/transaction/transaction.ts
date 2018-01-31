@@ -47,7 +47,9 @@ export class TransactionProvider {
         this.data = [];
 
         result.rows.map((row) => {
-          this.data.push(row.doc);
+          if (row.documentType === this.DOCUMENT_TYPE) {
+            this.data.push(row.doc);
+          }
         });
 
         resolve(this.data);
