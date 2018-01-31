@@ -33,7 +33,7 @@ export class TransactionProvider {
   /**
    * Get all transactions from CouchDB.
    *
-   * @returns {Promise<any>} Promise to retrieve and store transactions.
+   * @returns {Promise<Transaction[]>} Promise to retrieve and store transactions.
    */
   public getAllTransactions() {
     if (this.data) {
@@ -47,7 +47,7 @@ export class TransactionProvider {
         this.data = [];
 
         result.rows.map((row) => {
-          if (row.documentType === this.DOCUMENT_TYPE) {
+          if (row.doc.documentType === this.DOCUMENT_TYPE) {
             this.data.push(row.doc);
           }
         });
