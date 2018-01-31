@@ -10,6 +10,8 @@ import PouchDB from 'pouchdb';
 @Injectable()
 export class TransactionProvider {
 
+  private DOCUMENT_TYPE = 'TRANSACTION';
+
   private data: any;
   private db: any;
   private remote: any;
@@ -45,7 +47,9 @@ export class TransactionProvider {
         this.data = [];
 
         result.rows.map((row) => {
-          this.data.push(row.doc);
+          if (row.documentType === this.DOCUMENT_TYPE) {
+            this.data.push(row.doc);
+          }
         });
 
         resolve(this.data);
@@ -64,7 +68,8 @@ export class TransactionProvider {
    *
    * @param transaction A new transaction to be saved.
    */
-  public createTransaction(transaction) {
+  public createTransaction(transaction: Transaction) {
+    transaction.documentType = this.DOCUMENT_TYPE;
     this.db.post(transaction);
   }
 
@@ -73,7 +78,8 @@ export class TransactionProvider {
    *
    * @param transaction An updated transaction to be saved.
    */
-  public updateTransaction(transaction) {
+  public updateTransaction(transaction: Transaction) {
+    transaction.documentType = this.DOCUMENT_TYPE;
     this.db.put(transaction).catch((err) => {
       console.log(err);
     });
@@ -84,7 +90,7 @@ export class TransactionProvider {
    *
    * @param transaction A transaction to be deleted.
    */
-  public deleteTransaction(transaction) {
+  public deleteTransaction(transaction: Transaction) {
     this.db.remove(transaction).catch((err) => {
       console.log(err);
     });
