@@ -10,14 +10,16 @@ import PouchDB from 'pouchdb';
 @Injectable()
 export class TransactionProvider {
 
-  data: any;
-  db: any;
-  remote: any;
+  private DOCUMENT_TYPE = 'TRANSACTION';
+
+  private data: any;
+  private db: any;
+  private remote: any;
 
   constructor() {
-    this.db = new PouchDB('CryptoProfitLog');
+    this.db = new PouchDB('crypto_profit_log');
 
-    this.remote = 'http://127.0.0.1:5984/CryptoProfitLog';
+    this.remote = 'http://127.0.0.1:5984/crypto_profit_log';
 
     let options = {
       live: true,
@@ -31,9 +33,9 @@ export class TransactionProvider {
   /**
    * Get all transactions from CouchDB.
    *
-   * @returns {Promise<any>} Promise to retrieve and store transactions.
+   * @returns {Promise<Transaction[]>} Promise to retrieve and store transactions.
    */
-  getAllTransactions() {
+  public getAllTransactions() {
     if (this.data) {
       return Promise.resolve(this.data);
     }
@@ -45,7 +47,9 @@ export class TransactionProvider {
         this.data = [];
 
         result.rows.map((row) => {
-          this.data.push(row.doc);
+          if (row.doc.documentType === this.DOCUMENT_TYPE) {
+            this.data.push(row.doc);
+          }
         });
 
         resolve(this.data);
@@ -64,7 +68,8 @@ export class TransactionProvider {
    *
    * @param transaction A new transaction to be saved.
    */
-  createTransaction(transaction) {
+  public createTransaction(transaction: Transaction) {
+    transaction.documentType = this.DOCUMENT_TYPE;
     this.db.post(transaction);
   }
 
@@ -73,7 +78,8 @@ export class TransactionProvider {
    *
    * @param transaction An updated transaction to be saved.
    */
-  updateTransaction(transaction) {
+  public updateTransaction(transaction: Transaction) {
+    transaction.documentType = this.DOCUMENT_TYPE;
     this.db.put(transaction).catch((err) => {
       console.log(err);
     });
@@ -84,7 +90,7 @@ export class TransactionProvider {
    *
    * @param transaction A transaction to be deleted.
    */
-  deleteTransaction(transaction) {
+  public deleteTransaction(transaction: Transaction) {
     this.db.remove(transaction).catch((err) => {
       console.log(err);
     });
@@ -95,7 +101,7 @@ export class TransactionProvider {
    *
    * @param change The modified transaction.
    */
-  handleChange(change) {
+  private handleChange(change) {
     let changedDoc = null;
     let changedIndex = null;
 

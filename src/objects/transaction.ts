@@ -1,9 +1,10 @@
 class Transaction {
 
+  documentType: string;
   exchange: string;
   cryptoType: string;
-  purchaseAmountDollars: number;
-  currentCryptoPrice: number;
+  purchaseCost: number;
+  cryptoPrice: number;
   cryptoQuantity: number;
   breakEvenPrice: number;
   suggestedSellPrice: number;

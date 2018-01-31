@@ -14,19 +14,14 @@
     <ion-item>
       <ion-label>Exchange</ion-label>
       <ion-select formControlName="exchange" [(ngModel)]="transaction.exchange">
-        <ion-option value="GDAX">GDAX</ion-option>
-        <ion-option value="Coinbase">Coinbase</ion-option>
+        <ion-option *ngFor="let exchange of availableExchanges" [value]="exchange.name">{{exchange.name}}</ion-option>
       </ion-select>
     </ion-item>
 
     <ion-item>
       <ion-label>Crypto</ion-label>
       <ion-select formControlName="cryptoType" [(ngModel)]="transaction.cryptoType">
-        <ion-option value="Bitcoin">Bitcoin</ion-option>
-        <ion-option value="Bitcoin Cash">Bitcoin Cash</ion-option>
-        <ion-option value="Bitcoin Segwit2x">Bitcoin Segwit2x</ion-option>
-        <ion-option value="Ethereum">Ethereum</ion-option>
-        <ion-option value="Litecoin">Litecoin</ion-option>
+        <ion-option *ngFor="let cryptocurrency of availableCryptocurrencies" [value]="cryptocurrency.acronym">{{cryptocurrency.acronym}}</ion-option>
       </ion-select>
     </ion-item>
 
@@ -37,22 +32,22 @@
 
     <ion-item>
       <ion-label floating>Price</ion-label>
-      <ion-input type="number" formControlName="currentCryptoPrice" [(ngModel)]="transaction.currentCryptoPrice"></ion-input>
+      <ion-input type="number" formControlName="cryptoPrice" [(ngModel)]="transaction.cryptoPrice"></ion-input>
     </ion-item>
 
     <ion-fab right bottom>
-      <button ion-fab><ion-icon name="checkmark"></ion-icon></button>
+      <button ion-fab [disabled]="transactionForm.invalid"><ion-icon name="checkmark"></ion-icon></button>
     </ion-fab>
 
   </form>
 
-  <button type="button" ion-button block (click)="calculateSuggestedSalePrice()">
+  <button type="button" ion-button block [disabled]="transactionForm.invalid" (click)="calculate()">
     Calculate
   </button>
 
   <ion-item>
-    <ion-label floating>USD</ion-label>
-    <ion-input type="number" readonly [(ngModel)]="transaction.purchaseAmountDollars"></ion-input>
+    <ion-label floating>Cost</ion-label>
+    <ion-input type="number" readonly [(ngModel)]="transaction.purchaseCost"></ion-input>
   </ion-item>
 
   <ion-item>
