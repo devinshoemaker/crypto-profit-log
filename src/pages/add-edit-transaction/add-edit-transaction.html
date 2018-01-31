@@ -41,7 +41,7 @@
 
   </form>
 
-  <button type="button" ion-button block (click)="calculate()">
+  <button type="button" ion-button block [disabled]="transactionForm.invalid" (click)="calculate()">
     Calculate
   </button>
 
