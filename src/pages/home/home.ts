@@ -16,7 +16,7 @@ export class HomePage {
 
   public transactions: Transaction[];
 
-  constructor(public navCtrl: NavController, public transactionService: TransactionProvider, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public transactionProvider: TransactionProvider, private alertCtrl: AlertController) {
 
   }
 
@@ -31,7 +31,7 @@ export class HomePage {
    * Get all transactions from the transaction provider.
    */
   private getTransactions() {
-    this.transactionService.getAllTransactions().then((data) => {
+    this.transactionProvider.getAllTransactions().then((data) => {
       this.transactions = data;
     });
   }
@@ -59,7 +59,7 @@ export class HomePage {
    */
   public archiveTransaction(transaction) {
     transaction.complete = !transaction.complete;
-    this.transactionService.updateTransaction(transaction);
+    this.transactionProvider.updateTransaction(transaction);
   }
 
   /**
@@ -78,7 +78,7 @@ export class HomePage {
         {
           text: 'Delete',
           handler: () => {
-            this.transactionService.deleteTransaction(transaction);
+            this.transactionProvider.deleteTransaction(transaction);
           }
         }
       ]
