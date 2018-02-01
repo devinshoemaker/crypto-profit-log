@@ -96,17 +96,15 @@ export class AddEditTransactionPage {
    * Save the current transaction.
    */
   public saveTransaction() {
-    if (this.transactionForm.valid) {
-      this.calculate();
+    this.calculate();
 
-      if (this.navParams.get('isUpdate')) {
-        this.transactionProvider.updateTransaction(this.transactionForm.value);
-      } else {
-        this.transactionProvider.createTransaction(this.transactionForm.value);
-      }
-
-      this.navCtrl.pop();
+    if (this.navParams.get('isUpdate')) {
+      this.transactionProvider.updateTransaction(this.transactionForm.value);
+    } else {
+      this.transactionProvider.createTransaction(this.transactionForm.value);
     }
+
+    this.navCtrl.pop();
   }
 
 }
