@@ -24,36 +24,31 @@ export class AddEditTransactionPage {
   private DEFAULT_EXCHANGE = 'Binance';
   private DEFAULT_CRYPTOCURRENCY = 'BTC';
 
-  public transaction: Transaction = {
-    documentType: null,
-    exchange: null,
-    cryptoType: null,
-    purchaseCost: null,
-    cryptoPrice: null,
-    cryptoQuantity: null,
-    breakEvenPrice: null,
-    suggestedSellPrice: null,
-    complete: false
-  };
-
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder,
               private cryptocurrencyProvider: CryptocurrencyProvider, private exchangeProvider: ExchangeProvider,
               public transactionProvider: TransactionProvider) {
     this.transactionForm = formBuilder.group({
+      _id: [null],
+      _rev: [null],
+      documentType: [null],
       exchange: ['', Validators.required],
       cryptoType: ['', Validators.required],
-      cryptoPrice: ['', Validators.required],
-      cryptoQuantity: ['', Validators.required]
+      cryptoPrice: [null, Validators.required],
+      cryptoQuantity: [null, Validators.required],
+      purchaseCost: [null],
+      breakEvenPrice: [null],
+      suggestedSellPrice: [null],
+      complete: [false]
     });
 
     this.availableExchanges = exchangeProvider.getExchanges();
     this.availableCryptocurrencies = cryptocurrencyProvider.getCryptocurrencies();
 
     if (this.navParams.get('transaction')) {
-      this.transaction = this.navParams.get('transaction');
+      this.transactionForm.patchValue(this.navParams.get('transaction'));
     } else {
-      this.transaction.exchange = this.exchangeProvider.getExchangeByName(this.DEFAULT_EXCHANGE).name;
-      this.transaction.cryptoType = this.cryptocurrencyProvider.getCryptocurrencyByAcronym(this.DEFAULT_CRYPTOCURRENCY).acronym;
+      this.transactionForm.controls.exchange.patchValue(this.exchangeProvider.getExchangeByName(this.DEFAULT_EXCHANGE).name);
+      this.transactionForm.controls.cryptoType.patchValue(this.cryptocurrencyProvider.getCryptocurrencyByAcronym(this.DEFAULT_CRYPTOCURRENCY).acronym);
     }
   }
 
@@ -64,9 +59,9 @@ export class AddEditTransactionPage {
    */
   public calculate() {
     if (this.transactionForm.valid) {
-      this.transaction.purchaseCost = this.calculatePurchaseCost();
-      this.transaction.breakEvenPrice = this.calculateBreakEvenPrice();
-      this.transaction.suggestedSellPrice = this.calculateSuggestedSellPrice();
+      this.transactionForm.controls.purchaseCost.patchValue(this.calculatePurchaseCost());
+      this.transactionForm.controls.breakEvenPrice.patchValue(this.calculateBreakEvenPrice());
+      this.transactionForm.controls.suggestedSellPrice.patchValue(this.calculateSuggestedSellPrice());
     }
   }
 
@@ -76,7 +71,7 @@ export class AddEditTransactionPage {
    * @returns {number} The cost of the users purchase.
    */
   private calculatePurchaseCost() {
-    return (this.transaction.cryptoQuantity * this.transaction.cryptoPrice) * (1 + (this.exchangeProvider.getExchangeByName(this.transaction.exchange).transactionFeePercentage * 2));
+    return (this.transactionForm.controls.cryptoQuantity.value * this.transactionForm.controls.cryptoPrice.value) * (1 + (this.exchangeProvider.getExchangeByName(this.transactionForm.controls.exchange.value).transactionFeePercentage * 2));
   }
 
   /**
@@ -85,7 +80,7 @@ export class AddEditTransactionPage {
    * @returns {number} The break even price for the current transaction.
    */
   private calculateBreakEvenPrice() {
-    return this.transaction.cryptoPrice * (1 + (this.exchangeProvider.getExchangeByName(this.transaction.exchange).transactionFeePercentage * 2));
+    return this.transactionForm.controls.cryptoPrice.value * (1 + (this.exchangeProvider.getExchangeByName(this.transactionForm.controls.exchange.value).transactionFeePercentage * 2));
   }
 
   /**
@@ -94,24 +89,22 @@ export class AddEditTransactionPage {
    * @returns {number} The recommended sell price for the crypto.
    */
   private calculateSuggestedSellPrice() {
-    return this.transaction.breakEvenPrice * 1.1;
+    return this.transactionForm.controls.breakEvenPrice.value * 1.1;
   }
 
   /**
    * Save the current transaction.
    */
   public saveTransaction() {
-    if (this.transactionForm.valid) {
-      this.calculate();
+    this.calculate();
 
-      if (this.navParams.get('isUpdate')) {
-        this.transactionProvider.updateTransaction(this.transaction);
-      } else {
-        this.transactionProvider.createTransaction(this.transaction);
-      }
-
-      this.navCtrl.pop();
+    if (this.navParams.get('isUpdate')) {
+      this.transactionProvider.updateTransaction(this.transactionForm.value);
+    } else {
+      this.transactionProvider.createTransaction(this.transactionForm.value);
     }
+
+    this.navCtrl.pop();
   }
 
 }

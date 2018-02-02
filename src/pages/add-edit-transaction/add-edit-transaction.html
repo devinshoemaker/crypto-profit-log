@@ -13,26 +13,45 @@
 
     <ion-item>
       <ion-label>Exchange</ion-label>
-      <ion-select formControlName="exchange" [(ngModel)]="transaction.exchange">
+      <ion-select formControlName="exchange">
         <ion-option *ngFor="let exchange of availableExchanges" [value]="exchange.name">{{exchange.name}}</ion-option>
       </ion-select>
     </ion-item>
 
     <ion-item>
       <ion-label>Crypto</ion-label>
-      <ion-select formControlName="cryptoType" [(ngModel)]="transaction.cryptoType">
+      <ion-select formControlName="cryptoType">
         <ion-option *ngFor="let cryptocurrency of availableCryptocurrencies" [value]="cryptocurrency.acronym">{{cryptocurrency.acronym}}</ion-option>
       </ion-select>
     </ion-item>
 
     <ion-item>
       <ion-label floating>Quantity</ion-label>
-      <ion-input type="number" formControlName="cryptoQuantity" [(ngModel)]="transaction.cryptoQuantity"></ion-input>
+      <ion-input type="number" formControlName="cryptoQuantity"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label floating>Price</ion-label>
-      <ion-input type="number" formControlName="cryptoPrice" [(ngModel)]="transaction.cryptoPrice"></ion-input>
+      <ion-input type="number" formControlName="cryptoPrice"></ion-input>
+    </ion-item>
+
+    <button type="button" ion-button block [disabled]="transactionForm.invalid" (click)="calculate()">
+      Calculate
+    </button>
+
+    <ion-item>
+      <ion-label floating>Cost</ion-label>
+      <ion-input type="number" readonly formControlName="purchaseCost"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Break Even Price</ion-label>
+      <ion-input type="number" readonly formControlName="breakEvenPrice"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Suggested Sell Price</ion-label>
+      <ion-input type="number" readonly formControlName="suggestedSellPrice"></ion-input>
     </ion-item>
 
     <ion-fab right bottom>
@@ -40,24 +59,5 @@
     </ion-fab>
 
   </form>
-
-  <button type="button" ion-button block [disabled]="transactionForm.invalid" (click)="calculate()">
-    Calculate
-  </button>
-
-  <ion-item>
-    <ion-label floating>Cost</ion-label>
-    <ion-input type="number" readonly [(ngModel)]="transaction.purchaseCost"></ion-input>
-  </ion-item>
-
-  <ion-item>
-    <ion-label floating>Break Even Price</ion-label>
-    <ion-input type="number" readonly [(ngModel)]="transaction.breakEvenPrice"></ion-input>
-  </ion-item>
-
-  <ion-item>
-    <ion-label floating>Suggested Sell Price</ion-label>
-    <ion-input type="number" readonly [(ngModel)]="transaction.suggestedSellPrice"></ion-input>
-  </ion-item>
 
 </ion-content>
