@@ -1,4 +1,9 @@
 class Cryptocurrency {
-    name: string;
-    acronym: string;
+
+  _id: string;
+  _rev: string;
+  documentType: string;
+  name: string;
+  acronym: string;
+
 }

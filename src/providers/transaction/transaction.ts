@@ -120,7 +120,9 @@ export class TransactionProvider {
       if (changedDoc) {
         this.data[changedIndex] = change.doc;
       } else {
-        this.data.push(change.doc);
+        if (change.doc.documentType === this.DOCUMENT_TYPE) {
+          this.data.push(change.doc);
+        }
       }
 
     }
