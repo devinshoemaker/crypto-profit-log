@@ -16,9 +16,7 @@ export class HomePage {
 
   public transactions: Transaction[];
 
-  constructor(public navCtrl: NavController, public transactionProvider: TransactionProvider, private alertCtrl: AlertController) {
-
-  }
+  constructor(public navCtrl: NavController, public transactionProvider: TransactionProvider, private alertCtrl: AlertController) {}
 
   /**
    * Fetch transactions when this view has loaded.

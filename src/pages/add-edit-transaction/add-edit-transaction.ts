@@ -40,9 +40,11 @@ export class AddEditTransactionPage {
       suggestedSellPrice: [null],
       complete: [false]
     });
+  }
 
-    this.availableExchanges = exchangeProvider.getExchanges();
-    this.availableCryptocurrencies = cryptocurrencyProvider.getCryptocurrencies();
+  ionViewDidLoad() {
+    this.availableExchanges = this.exchangeProvider.getExchanges();
+    this.availableCryptocurrencies = this.cryptocurrencyProvider.getCryptocurrencies();
 
     if (this.navParams.get('transaction')) {
       this.transactionForm.patchValue(this.navParams.get('transaction'));
@@ -51,8 +53,6 @@ export class AddEditTransactionPage {
       this.transactionForm.controls.cryptoType.patchValue(this.cryptocurrencyProvider.getCryptocurrencyByAcronym(this.DEFAULT_CRYPTOCURRENCY).acronym);
     }
   }
-
-  ionViewDidLoad() {}
 
   /**
    * Calculate the transaction cost and suggested sale prices.
