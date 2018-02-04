@@ -70,7 +70,6 @@ export class TransactionProvider {
    * @param transaction A new transaction to be saved.
    */
   public createTransaction(transaction: Transaction) {
-    transaction.documentType = this.DOCUMENT_TYPE;
     this.db.post(transaction);
   }
 
@@ -80,7 +79,6 @@ export class TransactionProvider {
    * @param transaction An updated transaction to be saved.
    */
   public updateTransaction(transaction: Transaction) {
-    transaction.documentType = this.DOCUMENT_TYPE;
     this.db.put(transaction).catch((err) => {
       console.log(err);
     });
