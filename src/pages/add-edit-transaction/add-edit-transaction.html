@@ -20,7 +20,7 @@
 
     <ion-item>
       <ion-label>Crypto</ion-label>
-      <ion-select formControlName="cryptoType" #cryptoTypeSelect>
+      <ion-select formControlName="cryptocurrency" #cryptocurrencySelect>
         <ion-option *ngFor="let cryptocurrency of availableCryptocurrencies" [value]="cryptocurrency.acronym">{{cryptocurrency.acronym}}</ion-option>
         <ion-option (ionSelect)="addCustomCryptocurrency()">Custom</ion-option>
       </ion-select>
@@ -28,12 +28,12 @@
 
     <ion-item>
       <ion-label floating>Quantity</ion-label>
-      <ion-input type="number" formControlName="cryptoQuantity"></ion-input>
+      <ion-input type="number" formControlName="quantity"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label floating>Price</ion-label>
-      <ion-input type="number" formControlName="cryptoPrice"></ion-input>
+      <ion-input type="number" formControlName="price"></ion-input>
     </ion-item>
 
     <button type="button" ion-button block [disabled]="transactionForm.invalid" (click)="calculate()">
@@ -42,7 +42,7 @@
 
     <ion-item>
       <ion-label floating>Cost</ion-label>
-      <ion-input type="number" readonly formControlName="purchaseCost"></ion-input>
+      <ion-input type="number" readonly formControlName="cost"></ion-input>
     </ion-item>
 
     <ion-item>

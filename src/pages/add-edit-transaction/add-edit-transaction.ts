@@ -17,7 +17,7 @@ import { CryptocurrencyProvider } from '../../providers/cryptocurrency/cryptocur
 })
 export class AddEditTransactionPage {
 
-  @ViewChild('cryptoTypeSelect') cryptoTypeSelect: Select;
+  @ViewChild('cryptocurrencySelect') cryptocurrencySelect: Select;
 
   public transactionForm: FormGroup;
   public availableExchanges: Exchange[];
@@ -38,10 +38,10 @@ export class AddEditTransactionPage {
       _rev: [null],
       documentType: [null],
       exchange: ['', Validators.required],
-      cryptoType: ['', Validators.required],
-      cryptoPrice: [null, Validators.required],
-      cryptoQuantity: [null, Validators.required],
-      purchaseCost: [null],
+      cryptocurrency: ['', Validators.required],
+      price: [null, Validators.required],
+      quantity: [null, Validators.required],
+      cost: [null],
       breakEvenPrice: [null],
       suggestedSellPrice: [null],
       complete: [false]
@@ -56,7 +56,7 @@ export class AddEditTransactionPage {
       this.transactionForm.patchValue(this.navParams.get('transaction'));
     } else {
       this.transactionForm.controls.exchange.patchValue(this.exchangeProvider.getExchangeByName(this.DEFAULT_EXCHANGE).name);
-      this.transactionForm.controls.cryptoType.patchValue(this.DEFAULT_CRYPTOCURRENCY);
+      this.transactionForm.controls.cryptocurrency.patchValue(this.DEFAULT_CRYPTOCURRENCY);
     }
   }
 
@@ -73,7 +73,7 @@ export class AddEditTransactionPage {
    * Add a custom cryptocurrency.
    */
   public addCustomCryptocurrency() {
-    this.cryptoTypeSelect.close();
+    this.cryptocurrencySelect.close();
     let alert = this.alertCtrl.create({
       title: 'Add cryptocurrency',
       inputs: [
@@ -93,7 +93,7 @@ export class AddEditTransactionPage {
           text: 'Cancel',
           role: 'cancel',
           handler: () => {
-            this.cryptoTypeSelect.open();
+            this.cryptocurrencySelect.open();
           }
         },
         {
@@ -101,7 +101,7 @@ export class AddEditTransactionPage {
           handler: data => {
             if (data.name && data.acronym) {
               this.cryptocurrencyProvider.createCryptocurrency(data);
-              this.transactionForm.controls.cryptoType.patchValue(data.acronym);
+              this.transactionForm.controls.cryptocurrency.patchValue(data.acronym);
             } else {
               return false;
             }
@@ -117,7 +117,7 @@ export class AddEditTransactionPage {
    */
   public calculate() {
     if (this.transactionForm.valid) {
-      this.transactionForm.controls.purchaseCost.patchValue(this.calculatePurchaseCost());
+      this.transactionForm.controls.cost.patchValue(this.calculateCost());
       this.transactionForm.controls.breakEvenPrice.patchValue(this.calculateBreakEvenPrice());
       this.transactionForm.controls.suggestedSellPrice.patchValue(this.calculateSuggestedSellPrice());
     }
@@ -128,8 +128,8 @@ export class AddEditTransactionPage {
    *
    * @returns {number} The cost of the users purchase.
    */
-  private calculatePurchaseCost() {
-    return (this.transactionForm.controls.cryptoQuantity.value * this.transactionForm.controls.cryptoPrice.value) * (1 + (this.exchangeProvider.getExchangeByName(this.transactionForm.controls.exchange.value).transactionFeePercentage * 2));
+  private calculateCost() {
+    return (this.transactionForm.controls.quantity.value * this.transactionForm.controls.price.value) * (1 + (this.exchangeProvider.getExchangeByName(this.transactionForm.controls.exchange.value).transactionFeePercentage * 2));
   }
 
   /**
@@ -138,7 +138,7 @@ export class AddEditTransactionPage {
    * @returns {number} The break even price for the current transaction.
    */
   private calculateBreakEvenPrice() {
-    return this.transactionForm.controls.cryptoPrice.value * (1 + (this.exchangeProvider.getExchangeByName(this.transactionForm.controls.exchange.value).transactionFeePercentage * 2));
+    return this.transactionForm.controls.price.value * (1 + (this.exchangeProvider.getExchangeByName(this.transactionForm.controls.exchange.value).transactionFeePercentage * 2));
   }
 
   /**

@@ -15,12 +15,12 @@
 
         <div (click)="viewTransaction(transaction)">
           <ion-card-header>
-            Quantity: {{transaction.cryptoQuantity}}
+            Quantity: {{transaction.quantity}}
           </ion-card-header>
 
           <ion-card-content>
-            Crypto: {{transaction.cryptoType}}<br>
-            Cost: {{transaction.purchaseCost}}<br>
+            Crypto: {{transaction.cryptocurrency}}<br>
+            Cost: {{transaction.cost}}<br>
             Break even: {{transaction.breakEvenPrice}}<br>
             Complete: {{transaction.complete}}
           </ion-card-content>

@@ -4,10 +4,10 @@ class Transaction {
   _rev: string;
   documentType: string;
   exchange: string;
-  cryptoType: string;
-  cryptoPrice: number;
-  cryptoQuantity: number;
-  purchaseCost: number;
+  cryptocurrency: string;
+  price: number;
+  quantity: number;
+  cost: number;
   breakEvenPrice: number;
   suggestedSellPrice: number;
   complete: boolean;
