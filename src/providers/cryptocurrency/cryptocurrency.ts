@@ -58,6 +58,8 @@ export class CryptocurrencyProvider {
           });
         }
 
+        this.data.sort(CryptocurrencyProvider.sortCryptocurrencies);
+
         resolve(this.data);
 
         this.db.changes({live: true, since: 'now', include_docs:true}).on('change', (change) => {
@@ -98,6 +100,27 @@ export class CryptocurrencyProvider {
         }
       }
     }
+
+    this.data.sort(CryptocurrencyProvider.sortCryptocurrencies);
+  }
+
+  /**
+   * Sort cryptocurrencies alphabetically by their acronyms.
+   *
+   * @param cryptocurrency1 The first cryptocurrency to compare.
+   * @param cryptocurrency2 The second cryptocurrency to compare.
+   * @returns {number} How to sort the two cryptocurrencies.
+   */
+  private static sortCryptocurrencies(cryptocurrency1, cryptocurrency2) {
+    if (cryptocurrency1.acronym > cryptocurrency2.acronym) {
+      return 1;
+    }
+
+    if (cryptocurrency1.acronym < cryptocurrency2.acronym) {
+      return -1;
+    }
+
+    return 0;
   }
 
   /**
