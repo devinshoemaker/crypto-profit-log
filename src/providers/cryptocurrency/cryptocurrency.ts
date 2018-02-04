@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DocumentType } from '../../enums/document-type';
 import PouchDB from 'pouchdb';
 
 /**
@@ -9,7 +10,7 @@ import PouchDB from 'pouchdb';
 @Injectable()
 export class CryptocurrencyProvider {
 
-  private DOCUMENT_TYPE = 'CRYPTOCURRENCY';
+  private DOCUMENT_TYPE = DocumentType.CRYPTOCURRENCY;
 
   private data: Cryptocurrency[];
   private db: any;

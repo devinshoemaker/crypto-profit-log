@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DocumentType } from '../../enums/document-type';
 import 'rxjs/add/operator/map';
 import PouchDB from 'pouchdb';
 
@@ -10,7 +11,7 @@ import PouchDB from 'pouchdb';
 @Injectable()
 export class TransactionProvider {
 
-  private DOCUMENT_TYPE = 'TRANSACTION';
+  private DOCUMENT_TYPE = DocumentType.TRANSACTION;
 
   private data: any;
   private db: any;

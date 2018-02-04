@@ -1,0 +1,6 @@
+export enum DocumentType {
+
+  CRYPTOCURRENCY = 'CRYPTOCURRENCY',
+  TRANSACTION = 'TRANSACTION'
+
+}
