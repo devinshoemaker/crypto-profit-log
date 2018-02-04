@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { AlertController, IonicPage, NavController, NavParams, Select } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TransactionProvider } from '../../providers/transaction/transaction';
 import { ExchangeProvider } from '../../providers/exchange/exchange';
@@ -17,6 +17,8 @@ import { CryptocurrencyProvider } from '../../providers/cryptocurrency/cryptocur
 })
 export class AddEditTransactionPage {
 
+  @ViewChild('cryptoTypeSelect') cryptoTypeSelect: Select;
+
   public transactionForm: FormGroup;
   public availableExchanges: Exchange[];
   public availableCryptocurrencies: Cryptocurrency[];
@@ -24,8 +26,12 @@ export class AddEditTransactionPage {
   private DEFAULT_EXCHANGE = 'Binance';
   private DEFAULT_CRYPTOCURRENCY = 'BTC';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder,
-              private cryptocurrencyProvider: CryptocurrencyProvider, private exchangeProvider: ExchangeProvider,
+  constructor(public alertCtrl: AlertController,
+              public formBuilder: FormBuilder,
+              public navCtrl: NavController,
+              public navParams: NavParams,
+              public cryptocurrencyProvider: CryptocurrencyProvider,
+              public exchangeProvider: ExchangeProvider,
               public transactionProvider: TransactionProvider) {
     this.transactionForm = formBuilder.group({
       _id: [null],
@@ -44,14 +50,66 @@ export class AddEditTransactionPage {
 
   ionViewDidLoad() {
     this.availableExchanges = this.exchangeProvider.getExchanges();
-    this.availableCryptocurrencies = this.cryptocurrencyProvider.getCryptocurrencies();
+    this.getAvailableCryptocurrencies();
 
     if (this.navParams.get('transaction')) {
       this.transactionForm.patchValue(this.navParams.get('transaction'));
     } else {
       this.transactionForm.controls.exchange.patchValue(this.exchangeProvider.getExchangeByName(this.DEFAULT_EXCHANGE).name);
-      this.transactionForm.controls.cryptoType.patchValue(this.cryptocurrencyProvider.getCryptocurrencyByAcronym(this.DEFAULT_CRYPTOCURRENCY).acronym);
+      this.transactionForm.controls.cryptoType.patchValue(this.DEFAULT_CRYPTOCURRENCY);
     }
+  }
+
+  /**
+   * Retrieve available cryptocurrencies.
+   */
+  public getAvailableCryptocurrencies() {
+    this.cryptocurrencyProvider.getAllCryptocurrencies().then((data: Cryptocurrency[]) => {
+      this.availableCryptocurrencies = data;
+    });
+  }
+
+  /**
+   * Add a custom cryptocurrency.
+   */
+  public addCustomCryptocurrency() {
+    this.cryptoTypeSelect.close();
+    let alert = this.alertCtrl.create({
+      title: 'Add cryptocurrency',
+      inputs: [
+        {
+          name: 'name',
+          placeholder: 'Name: Bitcoin',
+          type: 'text'
+        },
+        {
+          name: 'acronym',
+          placeholder: 'Acronym: BTC',
+          type: 'text'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            this.cryptoTypeSelect.open();
+          }
+        },
+        {
+          text: 'Add',
+          handler: data => {
+            if (data.name && data.acronym) {
+              this.cryptocurrencyProvider.createCryptocurrency(data);
+              this.transactionForm.controls.cryptoType.patchValue(data.acronym);
+            } else {
+              return false;
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   /**

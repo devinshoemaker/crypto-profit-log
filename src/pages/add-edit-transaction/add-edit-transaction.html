@@ -20,8 +20,9 @@
 
     <ion-item>
       <ion-label>Crypto</ion-label>
-      <ion-select formControlName="cryptoType">
+      <ion-select formControlName="cryptoType" #cryptoTypeSelect>
         <ion-option *ngFor="let cryptocurrency of availableCryptocurrencies" [value]="cryptocurrency.acronym">{{cryptocurrency.acronym}}</ion-option>
+        <ion-option (ionSelect)="addCustomCryptocurrency()">Custom</ion-option>
       </ion-select>
     </ion-item>
 
