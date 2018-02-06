@@ -36,6 +36,7 @@ export class AddEditTransactionPage {
     this.transactionForm = formBuilder.group({
       _id: [null],
       _rev: [null],
+      date: [Date()],
       exchange: ['', Validators.required],
       cryptocurrency: ['', Validators.required],
       price: [null, Validators.required],
