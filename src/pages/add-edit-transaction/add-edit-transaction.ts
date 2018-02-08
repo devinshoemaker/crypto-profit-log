@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TransactionProvider } from '../../providers/transaction/transaction';
 import { ExchangeProvider } from '../../providers/exchange/exchange';
 import { CryptocurrencyProvider } from '../../providers/cryptocurrency/cryptocurrency';
-import { DocumentType } from '../../enums/document-type';
 
 /**
  * Create or edit a crypto currency transaction.
@@ -37,7 +36,6 @@ export class AddEditTransactionPage {
     this.transactionForm = formBuilder.group({
       _id: [null],
       _rev: [null],
-      documentType: [DocumentType.TRANSACTION],
       exchange: ['', Validators.required],
       cryptocurrency: ['', Validators.required],
       price: [null, Validators.required],

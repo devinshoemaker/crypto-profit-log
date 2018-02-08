@@ -2,7 +2,6 @@ class Transaction {
 
   _id: string;
   _rev: string;
-  documentType: string;
   exchange: string;
   cryptocurrency: string;
   price: number;

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { DocumentType } from '../../enums/document-type';
 import PouchDB from 'pouchdb';
 
 /**
@@ -9,8 +8,6 @@ import PouchDB from 'pouchdb';
  */
 @Injectable()
 export class CryptocurrencyProvider {
-
-  private DOCUMENT_TYPE = DocumentType.CRYPTOCURRENCY;
 
   private data: Cryptocurrency[];
   private db: any;
@@ -47,9 +44,7 @@ export class CryptocurrencyProvider {
         this.data = [];
 
         result.rows.map((row) => {
-          if (row.doc.documentType === this.DOCUMENT_TYPE) {
-            this.data.push(row.doc);
-          }
+          this.data.push(row.doc);
         });
 
         if (this.data.length === 0) {
@@ -96,9 +91,7 @@ export class CryptocurrencyProvider {
       if (changedDoc) {
         this.data[changedIndex] = change.doc;
       } else {
-        if (change.doc.documentType === this.DOCUMENT_TYPE) {
-          this.data.push(change.doc);
-        }
+        this.data.push(change.doc);
       }
     }
 
@@ -133,7 +126,6 @@ export class CryptocurrencyProvider {
     let bitcoin: Cryptocurrency = {
       _id: null,
       _rev: null,
-      documentType: null,
       name: 'Bitcoin',
       acronym: 'BTC'
     };
@@ -142,7 +134,6 @@ export class CryptocurrencyProvider {
     let bitcoinCash: Cryptocurrency = {
       _id: null,
       _rev: null,
-      documentType: null,
       name: 'Bitcoin Cash',
       acronym: 'BCH'
     };
@@ -151,7 +142,6 @@ export class CryptocurrencyProvider {
     let litecoin: Cryptocurrency = {
       _id: null,
       _rev: null,
-      documentType: null,
       name: 'Litecoin',
       acronym: 'LTC'
     };
@@ -160,7 +150,6 @@ export class CryptocurrencyProvider {
     let ethereum: Cryptocurrency = {
       _id: null,
       _rev: null,
-      documentType: null,
       name: 'Ethereum',
       acronym: 'ETH'
     };
@@ -188,7 +177,6 @@ export class CryptocurrencyProvider {
    * @param cryptocurrency A new cryptocurrency to be saved.
    */
   public createCryptocurrency(cryptocurrency: Cryptocurrency) {
-    cryptocurrency.documentType = this.DOCUMENT_TYPE;
     this.db.post(cryptocurrency);
   }
 
