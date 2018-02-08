@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { DocumentType } from '../../enums/document-type';
 import 'rxjs/add/operator/map';
 import PouchDB from 'pouchdb';
 
@@ -11,16 +10,14 @@ import PouchDB from 'pouchdb';
 @Injectable()
 export class TransactionProvider {
 
-  private DOCUMENT_TYPE = DocumentType.TRANSACTION;
-
   private data: any;
   private db: any;
   private remote: any;
 
   constructor() {
-    this.db = new PouchDB('crypto_profit_log');
+    this.db = new PouchDB('crypto_profit_log-transaction');
 
-    this.remote = 'http://127.0.0.1:5984/crypto_profit_log';
+    this.remote = 'http://127.0.0.1:5984/crypto_profit_log-transaction';
 
     let options = {
       live: true,
@@ -48,9 +45,7 @@ export class TransactionProvider {
         this.data = [];
 
         result.rows.map((row) => {
-          if (row.doc.documentType === this.DOCUMENT_TYPE) {
-            this.data.push(row.doc);
-          }
+          this.data.push(row.doc);
         });
 
         resolve(this.data);
@@ -119,9 +114,7 @@ export class TransactionProvider {
       if (changedDoc) {
         this.data[changedIndex] = change.doc;
       } else {
-        if (change.doc.documentType === this.DOCUMENT_TYPE) {
-          this.data.push(change.doc);
-        }
+        this.data.push(change.doc);
       }
 
     }
