@@ -17,9 +17,9 @@ export class CryptocurrencyProvider {
   private remote: any;
 
   constructor() {
-    this.db = new PouchDB('crypto_profit_log');
+    this.db = new PouchDB('crypto_profit_log-cryptocurrency');
 
-    this.remote = 'http://127.0.0.1:5984/crypto_profit_log';
+    this.remote = 'http://127.0.0.1:5984/crypto_profit_log-cryptocurrency';
 
     let options = {
       live: true,
