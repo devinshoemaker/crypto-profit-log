@@ -132,11 +132,11 @@ export class TransactionProvider {
    */
   private static sortTransactions(transaction1: Transaction, transaction2) {
     if (transaction1.date > transaction2.date) {
-      return 1;
+      return -1;
     }
 
     if (transaction1.date < transaction2.date) {
-      return -1;
+      return 1;
     }
 
     return 0;
