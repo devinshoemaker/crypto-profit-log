@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AlertController, NavController } from 'ionic-angular';
 import { TransactionProvider } from '../../providers/transaction/transaction';
 import { AddEditTransactionPage } from '../add-edit-transaction/add-edit-transaction';
+import moment from 'moment';
 
 /**
  * The home page that displays the users list of transactions.
@@ -16,9 +17,7 @@ export class HomePage {
 
   public transactions: Transaction[];
 
-  constructor(public navCtrl: NavController, public transactionProvider: TransactionProvider, private alertCtrl: AlertController) {
-
-  }
+  constructor(public navCtrl: NavController, public transactionProvider: TransactionProvider, private alertCtrl: AlertController) {}
 
   /**
    * Fetch transactions when this view has loaded.
@@ -84,6 +83,16 @@ export class HomePage {
       ]
     });
     alert.present();
+  }
+
+  /**
+   * Format a JavaScript date to "MM-DD-YYY".
+   *
+   * @param {Date} date JavaScript Date to be formatted.
+   * @returns {string} "MM-DD-YYYY" date string.
+   */
+  public formatDate(date: Date) {
+    return moment.utc(date).format('MM/DD/YYYY');
   }
 
 }

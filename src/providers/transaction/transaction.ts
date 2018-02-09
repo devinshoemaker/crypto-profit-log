@@ -10,16 +10,14 @@ import PouchDB from 'pouchdb';
 @Injectable()
 export class TransactionProvider {
 
-  private DOCUMENT_TYPE = 'TRANSACTION';
-
   private data: any;
   private db: any;
   private remote: any;
 
   constructor() {
-    this.db = new PouchDB('crypto_profit_log');
+    this.db = new PouchDB('crypto_profit_log-transaction');
 
-    this.remote = 'http://127.0.0.1:5984/crypto_profit_log';
+    this.remote = 'http://127.0.0.1:5984/crypto_profit_log-transaction';
 
     let options = {
       live: true,
@@ -47,12 +45,12 @@ export class TransactionProvider {
         this.data = [];
 
         result.rows.map((row) => {
-          if (row.doc.documentType === this.DOCUMENT_TYPE) {
-            this.data.push(row.doc);
-          }
+          this.data.push(row.doc);
         });
 
         resolve(this.data);
+
+        this.data.sort(TransactionProvider.sortTransactions);
 
         this.db.changes({live: true, since: 'now', include_docs:true}).on('change', (change) => {
           this.handleChange(change);
@@ -69,7 +67,6 @@ export class TransactionProvider {
    * @param transaction A new transaction to be saved.
    */
   public createTransaction(transaction: Transaction) {
-    transaction.documentType = this.DOCUMENT_TYPE;
     this.db.post(transaction);
   }
 
@@ -79,7 +76,6 @@ export class TransactionProvider {
    * @param transaction An updated transaction to be saved.
    */
   public updateTransaction(transaction: Transaction) {
-    transaction.documentType = this.DOCUMENT_TYPE;
     this.db.put(transaction).catch((err) => {
       console.log(err);
     });
@@ -122,8 +118,28 @@ export class TransactionProvider {
       } else {
         this.data.push(change.doc);
       }
-
     }
+
+    this.data.sort(TransactionProvider.sortTransactions);
+  }
+
+  /**
+   * Sort transactions by date.
+   *
+   * @param transaction1 The first transaction to compare.
+   * @param transaction2 The second transaction to compare.
+   * @returns {number} How to sort the two transactions.
+   */
+  private static sortTransactions(transaction1: Transaction, transaction2) {
+    if (transaction1.date > transaction2.date) {
+      return -1;
+    }
+
+    if (transaction1.date < transaction2.date) {
+      return 1;
+    }
+
+    return 0;
   }
 
 }
