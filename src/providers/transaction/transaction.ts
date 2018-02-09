@@ -50,6 +50,8 @@ export class TransactionProvider {
 
         resolve(this.data);
 
+        this.data.sort(TransactionProvider.sortTransactions);
+
         this.db.changes({live: true, since: 'now', include_docs:true}).on('change', (change) => {
           this.handleChange(change);
         });
@@ -116,8 +118,28 @@ export class TransactionProvider {
       } else {
         this.data.push(change.doc);
       }
-
     }
+
+    this.data.sort(TransactionProvider.sortTransactions);
+  }
+
+  /**
+   * Sort transactions by date.
+   *
+   * @param transaction1 The first transaction to compare.
+   * @param transaction2 The second transaction to compare.
+   * @returns {number} How to sort the two transactions.
+   */
+  private static sortTransactions(transaction1: Transaction, transaction2) {
+    if (transaction1.date > transaction2.date) {
+      return -1;
+    }
+
+    if (transaction1.date < transaction2.date) {
+      return 1;
+    }
+
+    return 0;
   }
 
 }

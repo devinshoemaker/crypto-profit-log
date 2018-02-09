@@ -22,6 +22,7 @@ export class AddEditTransactionPage {
   public transactionForm: FormGroup;
   public availableExchanges: Exchange[];
   public availableCryptocurrencies: Cryptocurrency[];
+  public today: string;
 
   private DEFAULT_EXCHANGE = 'Binance';
   private DEFAULT_CRYPTOCURRENCY = 'BTC';
@@ -36,6 +37,7 @@ export class AddEditTransactionPage {
     this.transactionForm = formBuilder.group({
       _id: [null],
       _rev: [null],
+      date: [new Date().toISOString(), Validators.required],
       exchange: ['', Validators.required],
       cryptocurrency: ['', Validators.required],
       price: [null, Validators.required],
@@ -48,6 +50,7 @@ export class AddEditTransactionPage {
   }
 
   ionViewDidLoad() {
+    this.today = new Date().toISOString();
     this.availableExchanges = this.exchangeProvider.getExchanges();
     this.getAvailableCryptocurrencies();
 

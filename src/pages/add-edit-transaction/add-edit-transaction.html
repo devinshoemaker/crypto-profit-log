@@ -27,6 +27,11 @@
     </ion-item>
 
     <ion-item>
+      <ion-label>Date</ion-label>
+      <ion-datetime formControlName="date" displayFormat="MM/DD/YYYY" max="{{today}}"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
       <ion-label floating>Quantity</ion-label>
       <ion-input type="number" formControlName="quantity"></ion-input>
     </ion-item>
