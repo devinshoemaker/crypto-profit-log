@@ -92,7 +92,7 @@ export class HomePage {
    * @returns {string} "MM-DD-YYYY" date string.
    */
   public formatDate(date: Date) {
-    return moment(date).format('MM/DD/YYYY, h:mm:ss a');
+    return moment.utc(date).format('MM/DD/YYYY');
   }
 
 }
