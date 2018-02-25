@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# script/test: Run test suite for application. Optionally pass in a path to an
+#              individual test file to run a single test.
+
+# Navigate to source code root.
+cd "$(dirname "$0")/.."
+
+# Check if NPM is installed
+if command -v npm >/dev/null 2>&1; then
+  script/update
+
+  echo "==> Running tests..."
+  npm test
+else
+  echo "==> NPM must be installed. Aborting."
+fi

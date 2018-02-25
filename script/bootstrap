@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# script/bootstrap: Resolve all dependencies that the
+#                   application requires to run.
+
+# Navigate to source code root.
+cd "$(dirname "$0")/.."
+
+# Check if NPM is installed
+if command -v npm >/dev/null 2>&1; then
+  command -v ionic >/dev/null 2>&1 || {
+    echo "==> Installing Ionic..."
+    npm install -g ionic
+  }
+
+  command -v cordova >/dev/null 2>&1 || {
+    echo "==> Installing Cordova..."
+    npm install -g cordova
+  }
+
+  if [ ! -d "node_modules" ]; then
+    echo "==> Installing NPM dependencies..."
+    npm install
+  fi
+else
+  echo "==> NPM must be installed. Aborting."
+fi
