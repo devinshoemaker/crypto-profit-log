@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# script/update: Update application to run for its current checkout.
+
+# Navigate to source code root.
+cd "$(dirname "$0")/.."
+
+# Check if NPM is installed
+if command -v npm >/dev/null 2>&1; then
+  script/bootstrap
+
+  echo '==> Updating NPM dependencies...'
+  npm install
+else
+  echo "==> NPM must be installed. Aborting."
+fi
