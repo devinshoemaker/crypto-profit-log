@@ -17,13 +17,28 @@ export class HomePage {
 
   public transactions: Transaction[];
 
-  constructor(public navCtrl: NavController, public transactionProvider: TransactionProvider, private alertCtrl: AlertController) {}
+  constructor(public navCtrl: NavController, public transactionProvider: TransactionProvider, private alertCtrl: AlertController) {
+    this.getTransactions();
+    // this.transactions = [{
+    //   _id: "6792ef09-cbdc-4058-af39-2cb355019475",
+    //   _rev: "1-c33c6d00a1604ba3806e2bdd9405430a",
+    //   date: new Date(),
+    //   exchange: "Binance",
+    //   cryptocurrency: "BTC",
+    //   price: 9500,
+    //   quantity: 0.1,
+    //   cost: 951.9,
+    //   breakEvenPrice: 9519,
+    //   suggestedSellPrice: 10470.900000000001,
+    //   complete: false
+    // }];
+  }
 
   /**
    * Fetch transactions when this view has loaded.
    */
   ionViewDidLoad() {
-    this.getTransactions();
+
   }
 
   /**

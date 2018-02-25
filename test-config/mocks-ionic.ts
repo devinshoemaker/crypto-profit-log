@@ -1,5 +1,6 @@
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { TransactionProvider } from '../src/providers/transaction/transaction';
 
 export class PlatformMock {
   public ready(): Promise<string> {
@@ -79,19 +80,19 @@ export class SplashScreenMock extends SplashScreen {
 }
 
 export class NavMock {
- 
+
   public pop(): any {
     return new Promise(function(resolve: Function): void {
       resolve();
     });
   }
- 
+
   public push(): any {
     return new Promise(function(resolve: Function): void {
       resolve();
     });
   }
- 
+
   public getActive(): any {
     return {
       'instance': {
@@ -99,7 +100,7 @@ export class NavMock {
       },
     };
   }
- 
+
   public setRoot(): any {
     return true;
   }
@@ -112,4 +113,27 @@ export class NavMock {
 
 export class DeepLinkerMock {
 
+}
+
+export class TransactionProviderMock extends TransactionProvider {
+  public getAllTransactions() {
+    console.log("mock");
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve([{
+          _id: "6792ef09-cbdc-4058-af39-2cb355019475",
+          _rev: "1-c33c6d00a1604ba3806e2bdd9405430a",
+          date: new Date(),
+          exchange: "Binance",
+          cryptocurrency: "BTC",
+          price: 9500,
+          quantity: 0.1,
+          cost: 951.9,
+          breakEvenPrice: 9519,
+          suggestedSellPrice: 10470.900000000001,
+          complete: false
+        }]);
+      }, 1000);
+    });
+  }
 }
