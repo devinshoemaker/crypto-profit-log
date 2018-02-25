@@ -9,7 +9,10 @@
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
-    "ionic:serve": "ionic-app-scripts serve"
+    "ionic:serve": "ionic-app-scripts serve",
+    "test": "karma start ./test-config/karma.conf.js",
+    "test-ci": "karma start ./test-config/karma.conf.js --single-run",
+    "test-coverage": "karma start ./test-config/karma.conf.js --coverage"
   },
   "dependencies": {
     "@angular/common": "^5.2.7",
