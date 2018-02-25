@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# script/server: Launch the application and any extra required processes
+#                locally.
+
+# Navigate to source code root.
+cd "$(dirname "$0")/.."
+
+# Check if NPM is installed
+if command -v npm >/dev/null 2>&1; then
+  script/update
+
+  echo "==> Launching application..."
+  ionic serve
+else
+  echo "==> NPM must be installed. Aborting."
+fi
