@@ -7,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { AddEditTransactionPage } from '../pages/add-edit-transaction/add-edit-transaction';
+import { TransactionListPage } from '../pages/transaction-list/transaction-list';
 
 import { CryptocurrencyProvider } from '../providers/cryptocurrency/cryptocurrency';
 import { ExchangeProvider } from '../providers/exchange/exchange';
@@ -16,7 +17,8 @@ import { TransactionProvider } from '../providers/transaction/transaction';
   declarations: [
     MyApp,
     HomePage,
-    AddEditTransactionPage
+    AddEditTransactionPage,
+    TransactionListPage
   ],
   imports: [
     BrowserModule,
@@ -26,7 +28,8 @@ import { TransactionProvider } from '../providers/transaction/transaction';
   entryComponents: [
     MyApp,
     HomePage,
-    AddEditTransactionPage
+    AddEditTransactionPage,
+    TransactionListPage
   ],
   providers: [
     StatusBar,

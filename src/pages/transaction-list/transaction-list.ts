@@ -1,24 +1,28 @@
 import { Component } from '@angular/core';
-import { AlertController, NavController } from 'ionic-angular';
-import { TransactionProvider } from '../../providers/transaction/transaction';
+import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AddEditTransactionPage } from '../add-edit-transaction/add-edit-transaction';
-import moment from 'moment';
-import {TransactionListPage} from "../transaction-list/transaction-list";
+import { TransactionProvider } from '../../providers/transaction/transaction';
+import * as moment from 'moment';
 
 /**
- * The home page that displays the users list of transactions.
+ * A page that displays the users list of transactions.
  *
  * @author Devin Shoemaker (devinshoe@gmail.com)
  */
+
+@IonicPage()
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: 'page-transaction-list',
+  templateUrl: 'transaction-list.html',
 })
-export class HomePage {
+export class TransactionListPage {
 
   public transactions: Transaction[];
 
-  constructor(public navCtrl: NavController, public transactionProvider: TransactionProvider, private alertCtrl: AlertController) {}
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public alertCtrl: AlertController,
+              public transactionProvider: TransactionProvider) {}
 
   /**
    * Fetch transactions when this view has loaded.
@@ -94,10 +98,6 @@ export class HomePage {
    */
   public formatDate(date: Date) {
     return moment.utc(date).format('MM/DD/YYYY');
-  }
-
-  public viewTransactionList() {
-    this.navCtrl.push(TransactionListPage);
   }
 
 }
