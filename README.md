@@ -22,3 +22,11 @@ $ add-cors-to-couchdb
 ```bash
 $ ionic serve
 ```
+
+## Project Management
+
+### Kanban
+Progress on upcoming features and improvements are being tracked on a Trello board here: https://trello.com/b/phEuoL1F
+
+### Issue Tracker
+Major issues discovered by developers, and issues found by the community, will be tracked on this GitHub repositories issue tracker.
