@@ -119,37 +119,44 @@ export class AddEditTransactionPage {
    */
   public calculate() {
     if (this.transactionForm.valid) {
-      this.transactionForm.controls.cost.patchValue(this.calculateCost());
-      this.transactionForm.controls.breakEvenPrice.patchValue(this.calculateBreakEvenPrice());
-      this.transactionForm.controls.suggestedSellPrice.patchValue(this.calculateSuggestedSellPrice());
+      let exchange: Exchange = this.exchangeProvider.getExchangeByName(this.transactionForm.controls.exchange.value);
+      this.transactionForm.controls.cost.patchValue(AddEditTransactionPage.calculateCost(this.transactionForm.controls.quantity.value, this.transactionForm.controls.price.value, exchange.transactionFeePercentage));
+      this.transactionForm.controls.breakEvenPrice.patchValue(AddEditTransactionPage.calculateBreakEvenPrice(this.transactionForm.controls.price.value, exchange.transactionFeePercentage));
+      this.transactionForm.controls.suggestedSellPrice.patchValue(AddEditTransactionPage.calculateSuggestedSellPrice(this.transactionForm.controls.breakEvenPrice.value));
     }
   }
 
   /**
    * Calculate the cost of the transaction in the currency the user is buying in.
    *
-   * @returns {number} The cost of the users purchase.
+   * @param {number} quantity The quantity of the cryptocurrency.
+   * @param {number} price The purchase price of the cryptocurrency.
+   * @param {number} transactionFeePercentage The transaction fee percentage for the purchase.
+   * @returns {number} The cost of the transaction.
    */
-  private calculateCost() {
-    return (this.transactionForm.controls.quantity.value * this.transactionForm.controls.price.value) * (1 + (this.exchangeProvider.getExchangeByName(this.transactionForm.controls.exchange.value).transactionFeePercentage * 2));
+  private static calculateCost(quantity: number, price: number, transactionFeePercentage: number) {
+    return (quantity * price) * (1 + (transactionFeePercentage * 2));
   }
 
   /**
    * Calculate the price that the crypto must be at for the user to break even.
    *
-   * @returns {number} The break even price for the current transaction.
+   * @param {number} price The purchase price of the cryptocurrency.
+   * @param {number} transactionFeePercentage The transaction fee percentage for the purchase.
+   * @returns {number} The break even price of the purchase.
    */
-  private calculateBreakEvenPrice() {
-    return this.transactionForm.controls.price.value * (1 + (this.exchangeProvider.getExchangeByName(this.transactionForm.controls.exchange.value).transactionFeePercentage * 2));
+  private static calculateBreakEvenPrice(price: number, transactionFeePercentage: number) {
+    return price * (1 + (transactionFeePercentage * 2));
   }
 
   /**
    * Calculate the recommended price of the crypto for the user to make a decent profit.
    *
-   * @returns {number} The recommended sell price for the crypto.
+   * @param {number} breakEvenPrice The break even price of the purchase.
+   * @returns {number} The suggested sell price to make a profit.
    */
-  private calculateSuggestedSellPrice() {
-    return this.transactionForm.controls.breakEvenPrice.value * 1.1;
+  private static calculateSuggestedSellPrice(breakEvenPrice: number) {
+    return breakEvenPrice * 1.1;
   }
 
   /**
