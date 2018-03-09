@@ -1,9 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { AlertController, IonicPage, NavController, NavParams, Select } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TransactionProvider } from '../../providers/transaction/transaction';
-import { ExchangeProvider } from '../../providers/exchange/exchange';
+
+import { AlertController, IonicPage, NavController, NavParams, Select } from 'ionic-angular';
+
 import { CryptocurrencyProvider } from '../../providers/cryptocurrency/cryptocurrency';
+import { ExchangeProvider } from '../../providers/exchange/exchange';
+import { TransactionCalculatorProvider } from '../../providers/transaction-calculator/transaction-calculator';
+import { TransactionProvider } from '../../providers/transaction/transaction';
 
 /**
  * Create or edit a crypto currency transaction.
@@ -120,43 +123,10 @@ export class AddEditTransactionPage {
   public calculate() {
     if (this.transactionForm.valid) {
       let exchange: Exchange = this.exchangeProvider.getExchangeByName(this.transactionForm.controls.exchange.value);
-      this.transactionForm.controls.cost.patchValue(AddEditTransactionPage.calculateCost(this.transactionForm.controls.quantity.value, this.transactionForm.controls.price.value, exchange.transactionFeePercentage));
-      this.transactionForm.controls.breakEvenPrice.patchValue(AddEditTransactionPage.calculateBreakEvenPrice(this.transactionForm.controls.price.value, exchange.transactionFeePercentage));
-      this.transactionForm.controls.suggestedSellPrice.patchValue(AddEditTransactionPage.calculateSuggestedSellPrice(this.transactionForm.controls.breakEvenPrice.value));
+      this.transactionForm.controls.cost.patchValue(TransactionCalculatorProvider.calculateCost(this.transactionForm.controls.quantity.value, this.transactionForm.controls.price.value, exchange.transactionFeePercentage));
+      this.transactionForm.controls.breakEvenPrice.patchValue(TransactionCalculatorProvider.calculateBreakEvenPrice(this.transactionForm.controls.price.value, exchange.transactionFeePercentage));
+      this.transactionForm.controls.suggestedSellPrice.patchValue(TransactionCalculatorProvider.calculateSuggestedSellPrice(this.transactionForm.controls.breakEvenPrice.value));
     }
-  }
-
-  /**
-   * Calculate the cost of the transaction in the currency the user is buying in.
-   *
-   * @param {number} quantity The quantity of the cryptocurrency.
-   * @param {number} price The purchase price of the cryptocurrency.
-   * @param {number} transactionFeePercentage The transaction fee percentage for the purchase.
-   * @returns {number} The cost of the transaction.
-   */
-  private static calculateCost(quantity: number, price: number, transactionFeePercentage: number) {
-    return (quantity * price) * (1 + (transactionFeePercentage * 2));
-  }
-
-  /**
-   * Calculate the price that the crypto must be at for the user to break even.
-   *
-   * @param {number} price The purchase price of the cryptocurrency.
-   * @param {number} transactionFeePercentage The transaction fee percentage for the purchase.
-   * @returns {number} The break even price of the purchase.
-   */
-  private static calculateBreakEvenPrice(price: number, transactionFeePercentage: number) {
-    return price * (1 + (transactionFeePercentage * 2));
-  }
-
-  /**
-   * Calculate the recommended price of the crypto for the user to make a decent profit.
-   *
-   * @param {number} breakEvenPrice The break even price of the purchase.
-   * @returns {number} The suggested sell price to make a profit.
-   */
-  private static calculateSuggestedSellPrice(breakEvenPrice: number) {
-    return breakEvenPrice * 1.1;
   }
 
   /**
