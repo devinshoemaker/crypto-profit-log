@@ -11,7 +11,7 @@ export class CryptocurrencyProvider {
 
   private data: Cryptocurrency[];
   private db: any;
-  private remote: any;
+  private readonly remote: any;
 
   constructor() {
     this.db = new PouchDB('crypto_profit_log-cryptocurrency');
