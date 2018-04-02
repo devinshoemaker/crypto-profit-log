@@ -116,24 +116,24 @@ export class DeepLinkerMock {
 }
 
 export class TransactionProviderMock extends TransactionProvider {
-  public getAllTransactions() {
-    console.log("mock");
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve([{
-          _id: "6792ef09-cbdc-4058-af39-2cb355019475",
-          _rev: "1-c33c6d00a1604ba3806e2bdd9405430a",
-          date: new Date(),
-          exchange: "Binance",
-          cryptocurrency: "BTC",
-          price: 9500,
-          quantity: 0.1,
-          cost: 951.9,
-          breakEvenPrice: 9519,
-          suggestedSellPrice: 10470.900000000001,
-          complete: false
-        }]);
-      }, 1000);
-    });
-  }
+  // public getAllTransactions() {
+  //   console.log("mock");
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       resolve([{
+  //         _id: "6792ef09-cbdc-4058-af39-2cb355019475",
+  //         _rev: "1-c33c6d00a1604ba3806e2bdd9405430a",
+  //         date: new Date(),
+  //         exchange: "Binance",
+  //         cryptocurrency: "BTC",
+  //         price: 9500,
+  //         quantity: 0.1,
+  //         cost: 951.9,
+  //         breakEvenPrice: 9519,
+  //         suggestedSellPrice: 10470.900000000001,
+  //         complete: false
+  //       }]);
+  //     }, 1000);
+  //   });
+  // }
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import PouchDB from 'pouchdb';
 
@@ -31,14 +32,10 @@ export class TransactionProvider {
   /**
    * Get all transactions from CouchDB.
    *
-   * @returns {Promise<Transaction[]>} Promise to retrieve and store transactions.
+   * @returns {Observable<Transaction[]>} Observable to retrieve and store transactions.
    */
-  public getAllTransactions() {
-    if (this.data) {
-      return Promise.resolve(this.data);
-    }
-
-    return new Promise(resolve => {
+  public getAllTransactions(): Observable<Transaction[]> {
+    return Observable.fromPromise(new Promise(resolve => {
       this.db.allDocs({
         include_docs: true
       }).then((result) => {
@@ -58,7 +55,7 @@ export class TransactionProvider {
       }).catch((error) => {
         console.log(error);
       });
-    });
+    }));
   }
 
   /**

@@ -9,7 +9,7 @@
 <ion-content padding>
 
   <ion-list>
-    <div *ngFor="let transaction of transactions">
+    <div *ngFor="let transaction of transactions | async">
 
       <ion-card>
 
