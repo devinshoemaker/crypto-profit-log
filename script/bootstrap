@@ -1,10 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 
 # script/bootstrap: Resolve all dependencies that the
 #                   application requires to run.
 
-# Navigate to source code root.
-cd "$(dirname "$0")/.."
+# Exit immediately if a command exits with a non-zero status
+set -e
 
 # Check if NPM is installed
 if command -v npm >/dev/null 2>&1; then

@@ -1,13 +1,16 @@
-#!/bin/sh
+#!/bin/bash
 
 # script/update: Update application to run for its current checkout.
 
-# Navigate to source code root.
-cd "$(dirname "$0")/.."
+# Exit immediately if a command exits with a non-zero status
+set -e
+
+# Store a local variable of the scripts current directory
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Check if NPM is installed
 if command -v npm >/dev/null 2>&1; then
-  script/bootstrap
+  ${DIR}/bootstrap
 
   echo '==> Updating NPM dependencies...'
   npm install
